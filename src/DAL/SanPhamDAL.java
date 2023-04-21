@@ -79,6 +79,33 @@ public class SanPhamDAL extends DatabaseAccess{
 		return false;
 	}
 	
+	public static boolean capNhatSoLuongSP(String maSanPham, int soLuong) {
+		try {
+			getConnection();
+			int n = 0;
+    		String s = "SELECT SO_LUONG FROM SAN_PHAM WHERE MA_SP='"+maSanPham+"'";
+    		statement = conn.createStatement();
+    		resultSet = statement.executeQuery(s);
+    		while(resultSet.next()) {
+    			n = resultSet.getInt(1);
+    		}
+    		n -= soLuong;
+    		String s1 = "UPDATE SAN_PHAM SET SO_LUONG=" + n + " WHERE MA_SP = '" + maSanPham + "'";
+    		statement = conn.createStatement();
+    		int i = statement.executeUpdate(s1);
+    		closeConnection();
+    		if (i > 0) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	} catch(Exception ex) {
+    		System.out.println(ex.getMessage());
+    	}
+    	closeConnection();
+    	return false;
+	}
+	
 	public static int laySoLuongSanPham() {
 		int i = 0;
 		try {

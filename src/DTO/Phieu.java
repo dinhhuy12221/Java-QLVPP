@@ -1,21 +1,26 @@
 package DTO;
 
+import java.util.ArrayList;
+
 public class Phieu {
     private String maPhieu;
     private NhanVien nhanVien;
+    private ArrayList<ChiTietPhieu> dsct;
     private String ngayLap;
     private double tongTien;
 
     public Phieu(){
         this.maPhieu = "";
         this.nhanVien = null;
+        this.dsct = null;
         this.ngayLap = "";
         this.tongTien = 0;
     }
 
-    public Phieu(String maPhieu, NhanVien nhanVien, String ngayLap, double tongTien){
+    public Phieu(String maPhieu, NhanVien nhanVien,ArrayList<ChiTietPhieu> dsct, String ngayLap, double tongTien){
         this.maPhieu = maPhieu;
         this.nhanVien = nhanVien;
+        this.dsct = dsct;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
     }
@@ -35,12 +40,21 @@ public class Phieu {
     public NhanVien getNhanVien(){
         return this.nhanVien;
     }
+    
+    public void setDSCT(ArrayList<ChiTietPhieu> dsct) {
+    	this.dsct = dsct;
+    }
+    
+    public ArrayList<ChiTietPhieu> getDSCT(){
+    	return this.dsct;
+    }
+    
 
     public void setNgayLap(String ngayLap){
         this.ngayLap = ngayLap;
     }
 
-    public String getNgayLap(String ngayLap){
+    public String getNgayLap(){
         return this.ngayLap;
     }
 

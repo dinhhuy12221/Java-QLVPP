@@ -1,17 +1,21 @@
 package DTO;
 
+import java.util.ArrayList;
+
 public class HoaDon extends Phieu{
     private KhachHang khachHang;
-    private boolean tinhTrang;
+    private boolean trangThai;
 
     public HoaDon(){
         super();
         this.khachHang = null;
+        this.trangThai = false;
     }
 
-    public HoaDon(String maPhieu, NhanVien nhanVien, KhachHang khachHang,String ngayLap, double tongTien){
-        super(maPhieu, nhanVien, ngayLap, tongTien);
+    public HoaDon(String maPhieu, KhachHang khachHang,NhanVien nhanVien, ArrayList<ChiTietPhieu> dsct,String ngayLap, double tongTien, boolean trangThai){
+        super(maPhieu, nhanVien, dsct, ngayLap, tongTien);
         this.khachHang = khachHang;
+        this.trangThai = trangThai;
     }
 
     public void setKhachHang(KhachHang khachHang){
@@ -21,12 +25,12 @@ public class HoaDon extends Phieu{
     public KhachHang getKhachHang(){
         return this.khachHang;
     }
-    
-    public void setTinhTrang(boolean tinhTrang) {
-    	this.tinhTrang = tinhTrang;
+   
+    public void setTrangThai(boolean trangThai) {
+    	this.trangThai = trangThai;
     }
     
-    public boolean getTinhTrang() {
-    	return this.tinhTrang;
+    public boolean getTrangThai() {
+    	return this.trangThai;
     }
 }

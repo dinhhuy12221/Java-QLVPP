@@ -23,7 +23,7 @@ public class GiaoDienGUI extends JFrame {
 		setTitle("Giao diện quản lý");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1091, 640);
+		setBounds(100, 100, 1400, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -37,8 +37,8 @@ public class GiaoDienGUI extends JFrame {
 		panel.setLayout(null);
 		
 		JPanel panelGiaoDien = new JPanel();
-		panelGiaoDien.setSize(new Dimension(880, 585));
-		panelGiaoDien.setBounds(187, 10, 880, 585);
+		panelGiaoDien.setSize(new Dimension(1082,689));
+		panelGiaoDien.setBounds(187, 10, 1082,689);
 		contentPane.add(panelGiaoDien);
 		panelGiaoDien.setLayout(null);
 		
@@ -144,6 +144,5 @@ public class GiaoDienGUI extends JFrame {
 		btnThongKe.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnThongKe.setBounds(10, 472, 147, 43);
 		panel.add(btnThongKe);
-		
 	}
 }

@@ -50,6 +50,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.DropMode;
 
 public class SanPhamGUI extends JPanel {
 	JComboBox cbMaNCC = new JComboBox();
@@ -722,7 +723,7 @@ public class SanPhamGUI extends JPanel {
 	
 	private void chonAnh() {
 		try {
-			JFileChooser fc = new JFileChooser("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image");
+			JFileChooser fc = new JFileChooser("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\san_pham");
 			fc.setDialogTitle("Chọn ảnh");
 			fc.showOpenDialog(new SanPhamGUI());
 			File file = fc.getSelectedFile();

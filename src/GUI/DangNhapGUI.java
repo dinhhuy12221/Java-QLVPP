@@ -75,9 +75,10 @@ public class DangNhapGUI extends JFrame {
 				String tenDangNhap = tfTenDangNhap.getText();
 				String matKhau = String.valueOf(tfMatKhau.getPassword());
 				if (DangNhapBLL.isLogin(new TaiKhoan(tenDangNhap,"",new ChucVu(),matKhau,""))) {
-					 JOptionPane.showMessageDialog(new DangNhapGUI(),"Đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-					 new GiaoDienGUI();
-					 setVisible(false);
+					 JOptionPane.showMessageDialog(null,"Đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					 GiaoDienGUI giaoDien = new GiaoDienGUI();
+					 giaoDien.setVisible(true);
+					 dispose();
 				}
 				else{
 					 JOptionPane.showMessageDialog(new DangNhapGUI(),"Đăng nhập thất bại", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

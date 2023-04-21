@@ -83,7 +83,7 @@ public class SanPham {
         return this.giaNhap;
     }
 
-    public void setGiaNBan(double giaBan){
+    public void setGiaBan(double giaBan){
         this.giaBan = giaBan;
     }
 

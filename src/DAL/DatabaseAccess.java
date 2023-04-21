@@ -9,6 +9,7 @@ class DatabaseAccess {
     protected static Statement statement;
     protected static PreparedStatement ps;
     protected static ResultSet resultSet;
+    protected static ResultSet resultSet1;
 
     protected static void getConnection(){
         try{

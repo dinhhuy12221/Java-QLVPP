@@ -23,9 +23,6 @@ public class ChonKhachHangGUI extends JFrame{
 	private JTextField tfTimKiem;
 	DefaultTableModel tModelKHChon;
 	ArrayList<KhachHang> danhSachKH = new ArrayList<KhachHang>();
-	
-	public KhachHang kh = new KhachHang();
-	public boolean checked = true;
 
 
 	/**
@@ -49,8 +46,8 @@ public class ChonKhachHangGUI extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int indexCKH = khChonTable.getSelectedRow();
 				if(indexCKH >= 0) {
-					kh = danhSachKH.get(indexCKH);
-					checked = false;
+					HoaDonGUI.tfMaKH.setText(danhSachKH.get(indexCKH).getMa());
+					HoaDonGUI.tfTenKH.setText(danhSachKH.get(indexCKH).getHoTen());
 					dispose();
 				}
 			}
@@ -72,11 +69,11 @@ public class ChonKhachHangGUI extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JLabel lblTimKiem = new JLabel("Tìm kiếm");
-		lblTimKiem.setBounds(10, 26, 45, 13);
+		lblTimKiem.setBounds(10, 26, 57, 13);
 		getContentPane().add(lblTimKiem);
 		
 		tfTimKiem = new JTextField();
-		tfTimKiem.setBounds(65, 23, 246, 19);
+		tfTimKiem.setBounds(77, 23, 234, 19);
 		getContentPane().add(tfTimKiem);
 		tfTimKiem.setColumns(10);
 		tfTimKiem.getDocument().addDocumentListener((new DocumentListener() {

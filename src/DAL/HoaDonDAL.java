@@ -120,18 +120,20 @@ public class HoaDonDAL extends DatabaseAccess{
     			double tongTien = resultSet.getDouble(5);
     			boolean trangThai = resultSet.getBoolean(6);
     			
-    			String s2 = "SELECT MA_SP, DON_GIA, SO_LUONG, THANH_TIEN FROM CT_HOA_DON WHERE MA_HD = '" + maHD + "'";
+    			String s2 = "SELECT SP.MA_SP, SP.TEN_SP, CTHD.DON_GIA, CTHD.SO_LUONG, CTHD.THANH_TIEN FROM CT_HOA_DON CTHD, SAN_PHAM SP WHERE CTHD.MA_HD = '" + maHD + "' AND CTHD.MA_SP = SP.MA_SP";
     			statement = conn.createStatement();
         		resultSet1 = statement.executeQuery(s2);
         		ArrayList<ChiTietPhieu> dsct = new ArrayList<ChiTietPhieu>();
         		while(resultSet1.next()) {
         			String maSP = resultSet1.getString(1);
-        			double donGia = resultSet1.getDouble(2);
-        			int soLuong = resultSet1.getInt(3);
-        			double thanhTien = resultSet1.getDouble(4);
+        			String tenSP = resultSet1.getString(2);
+        			double donGia = resultSet1.getDouble(3);
+        			int soLuong = resultSet1.getInt(4);
+        			double thanhTien = resultSet1.getDouble(5);
         			
         			SanPham sanPham = new SanPham();
         			sanPham.setMaSanPham(maSP);
+        			sanPham.setTenSanPham(tenSP);
         			sanPham.setGiaBan(donGia);
         			sanPham.setSoLuong(soLuong);
         			

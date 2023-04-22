@@ -1,7 +1,6 @@
 package GUI;
 
 import javax.swing.JPanel;
-import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -9,11 +8,9 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 import DTO.NhanVien;
 import DTO.SanPham;
-import DTO.LoaiSanPham;
 import DTO.KhachHang;
 import DTO.ChiTietPhieu;
 import DTO.HoaDon;
@@ -21,20 +18,11 @@ import DTO.HoaDon;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 import javax.swing.JButton;
-import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JToggleButton;
-import javafx.scene.control.DatePicker;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -42,10 +30,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
 public class HoaDonGUI extends JPanel {
-	private int indexCKH;
 	
-	private JTextField tfMaKH;
-	private JTextField tfTenKH;
+	public static JTextField tfMaKH;
+	public static JTextField tfTenKH;
 	private JTextField tfTimKiem;
 	private JTextField tfSoLuong;
 	
@@ -54,14 +41,13 @@ public class HoaDonGUI extends JPanel {
 	private DefaultTableModel tModelDSHD;
 	
 	private JTable tableDSSPChon;
-	private JTable tableDSHD;
+	static JTable tableDSHD;
 	private JTable tableDSSP;
 
 	private ArrayList<SanPham> danhSachSPChon = new ArrayList<SanPham>();
 	private ArrayList<SanPham> danhSachSP = new ArrayList<SanPham>();
-	private ArrayList<HoaDon> danhSachHD = BLL.HoaDonBLL.layDanhSachHD();
+	public static ArrayList<HoaDon> danhSachHD = new ArrayList<HoaDon>();
 	
-	private KhachHang khachHang = new KhachHang();
 	/**
 	 * Create the panel.
 	 */
@@ -87,7 +73,7 @@ public class HoaDonGUI extends JPanel {
 		panelDanhSachHD.setLayout(null);
 		panelDanhSachHD.add(scrollPaneDSHD);
 		
-		tModelDSHD = new DefaultTableModel(new Object[][] {}, new String[] {"Mã hóa đơn", "Mã khách hàng", "Mã nhân viên",  "Ngày lập", "Tổng tiền" , "Trạng thái"});
+		tModelDSHD = new DefaultTableModel(new Object[][] {}, new String[] {"Mã hóa đơn", "Mã khách hàng", "Tên khách hàng","Mã nhân viên", "Tên nhân viên","Ngày lập", "Tổng tiền" , "Trạng thái"});
 		tableDSHD = new JTable();
 		tableDSHD.setModel(tModelDSHD);
 		scrollPaneDSHD.setViewportView(tableDSHD);
@@ -177,7 +163,7 @@ public class HoaDonGUI extends JPanel {
 		panel.setLayout(null);
 		
 		JComboBox cbTimKiem = new JComboBox();
-		cbTimKiem.setModel(new DefaultComboBoxModel(new String[] {"", "Mã hóa đơn", "Mã khách hàng", "Mã nhân viên", "Tên khách hàng", "Tên nhân viên"}));
+		cbTimKiem.setModel(new DefaultComboBoxModel(new String[] {"", "Mã hóa đơn", "Mã khách hàng", "Tên khách hàng" ,"Mã nhân viên", "Tên nhân viên","Tên khách hàng", "Tên nhân viên"}));
 		cbTimKiem.setBounds(10, 21, 109, 14);
 		panel.add(cbTimKiem);
 		
@@ -368,6 +354,8 @@ public class HoaDonGUI extends JPanel {
 	private void chonKhachHang(ActionEvent e) {
 		ChonKhachHangGUI ckh = new ChonKhachHangGUI();
 		ckh.setVisible(true);
+		
+
 	}
 	
 	private void hienThiDSSPChon(ArrayList<SanPham> dssp) {
@@ -416,75 +404,78 @@ public class HoaDonGUI extends JPanel {
 	}
 	
 	private void xemChiTietHoaDon() {
-		JFrame frame = new JFrame("Chi tiết hóa đơn");
-		JButton btnDong = new JButton("Đóng");
-		btnDong.setBounds(300,300,100,30);
-		btnDong.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
-		
-		JTable CTHDTable = new JTable();
-		DefaultTableModel CTHDTableModel = new DefaultTableModel(new Object[][] {}, new String[] {"Mã sản phẩm", "Đơn giá", "Số lượng", "Thành tiền"});
-		CTHDTable.setEnabled(false);
-		
-		CTHDTable.setModel(CTHDTableModel);
-		JScrollPane CTHDSP = new JScrollPane();
-		try {
-			int i = tableDSHD.getSelectedRow();
-			if(i >= 0) {
-				for (ChiTietPhieu ctp : danhSachHD.get(i).getDSCT()) {
-					CTHDTableModel.addRow(new Object [] {ctp.getSanPham().getMaSanPham(), ctp.getSanPham().getGiaBan(),ctp.getSanPham().getSoLuong(),ctp.getThanhTien()});
-				}
-			}
-			JLabel lbTongTien = new JLabel("Tổng tiền: " + danhSachHD.get(i).getTongTien());
-			lbTongTien.setBounds(500,250,120,50);
-			JLabel lbMaKH = new JLabel();
-			lbMaKH.setText("Mã khách hàng: " + danhSachHD.get(i).getKhachHang().getMa());
-			lbMaKH.setBounds(10,10,150,40);
-			JLabel lbTenKH = new JLabel();
-			lbTenKH.setText("Tên khách hàng: " + danhSachHD.get(i).getKhachHang().getHoTen());
-			lbTenKH.setBounds(10,50,250,40);
-			JLabel lbMaNV = new JLabel();
-			lbMaNV.setText("Mã nhân viên: " + danhSachHD.get(i).getNhanVien().getMa());
-			lbMaNV.setBounds(10,90,150,40);
-			JLabel lbTenNV = new JLabel();
-			lbTenNV.setText("Tên nhân viên: " + danhSachHD.get(i).getNhanVien().getHoTen());
-			lbTenNV.setBounds(10,130,250,40);
-			JLabel lbNgayLap = new JLabel();
-			lbNgayLap.setText("Ngày lập: " + danhSachHD.get(i).getNgayLap());
-			lbNgayLap.setBounds(10,170,250,40);
-			
-			frame.getContentPane().add(lbTongTien);
-			frame.getContentPane().add(lbMaKH);
-			frame.getContentPane().add(lbTenKH);
-			frame.getContentPane().add(lbMaNV);
-			frame.getContentPane().add(lbTenNV);
-			frame.getContentPane().add(lbNgayLap);
-			
-		} catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		frame.getContentPane().add(btnDong);
-		
-		CTHDSP.setViewportView(CTHDTable);
-		CTHDSP.setBounds(350,10,300,250);;
-		frame.getContentPane().add(CTHDSP);
-		frame.setSize(700,400);
-		frame.setResizable(false);
-		frame.getContentPane().setLayout(null);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		ChiTietHoaDonGUI cthd = new ChiTietHoaDonGUI();
+		cthd.setVisible(true);
+//		JFrame frame = new JFrame("Chi tiết hóa đơn");
+//		JButton btnDong = new JButton("Đóng");
+//		btnDong.setBounds(300,300,100,30);
+//		btnDong.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				frame.dispose();
+//			}
+//		});
+//		
+//		JTable CTHDTable = new JTable();
+//		DefaultTableModel CTHDTableModel = new DefaultTableModel(new Object[][] {}, new String[] {"Mã sản phẩm", "Đơn giá", "Số lượng", "Thành tiền"});
+//		CTHDTable.setEnabled(false);
+//		
+//		CTHDTable.setModel(CTHDTableModel);
+//		JScrollPane CTHDSP = new JScrollPane();
+//		try {
+//			int i = tableDSHD.getSelectedRow();
+//			if(i >= 0) {
+//				for (ChiTietPhieu ctp : danhSachHD.get(i).getDSCT()) {
+//					CTHDTableModel.addRow(new Object [] {ctp.getSanPham().getMaSanPham(), ctp.getSanPham().getGiaBan(),ctp.getSanPham().getSoLuong(),ctp.getThanhTien()});
+//				}
+//			}
+//			JLabel lbTongTien = new JLabel("Tổng tiền: " + danhSachHD.get(i).getTongTien());
+//			lbTongTien.setBounds(500,250,120,50);
+//			JLabel lbMaKH = new JLabel();
+//			lbMaKH.setText("Mã khách hàng: " + danhSachHD.get(i).getKhachHang().getMa());
+//			lbMaKH.setBounds(10,10,150,40);
+//			JLabel lbTenKH = new JLabel();
+//			lbTenKH.setText("Tên khách hàng: " + danhSachHD.get(i).getKhachHang().getHoTen());
+//			lbTenKH.setBounds(10,50,250,40);
+//			JLabel lbMaNV = new JLabel();
+//			lbMaNV.setText("Mã nhân viên: " + danhSachHD.get(i).getNhanVien().getMa());
+//			lbMaNV.setBounds(10,90,150,40);
+//			JLabel lbTenNV = new JLabel();
+//			lbTenNV.setText("Tên nhân viên: " + danhSachHD.get(i).getNhanVien().getHoTen());
+//			lbTenNV.setBounds(10,130,250,40);
+//			JLabel lbNgayLap = new JLabel();
+//			lbNgayLap.setText("Ngày lập: " + danhSachHD.get(i).getNgayLap());
+//			lbNgayLap.setBounds(10,170,250,40);
+//			
+//			frame.getContentPane().add(lbTongTien);
+//			frame.getContentPane().add(lbMaKH);
+//			frame.getContentPane().add(lbTenKH);
+//			frame.getContentPane().add(lbMaNV);
+//			frame.getContentPane().add(lbTenNV);
+//			frame.getContentPane().add(lbNgayLap);
+//			
+//		} catch(Exception ex) {
+//			System.out.println(ex.getMessage());
+//		}
+//		frame.getContentPane().add(btnDong);
+//		
+//		CTHDSP.setViewportView(CTHDTable);
+//		CTHDSP.setBounds(350,10,300,250);;
+//		frame.getContentPane().add(CTHDSP);
+//		frame.setSize(700,400);
+//		frame.setResizable(false);
+//		frame.getContentPane().setLayout(null);
+//		frame.setLocationRelativeTo(null);
+//		frame.setVisible(true);
 	}
 	
-	private void hienThiDSHD(ArrayList<HoaDon> danhSachHD) {
+	private void hienThiDSHD(ArrayList<HoaDon> dshd) {
 		tModelDSHD.setRowCount(0);
+		danhSachHD = dshd;
 		for (HoaDon hoaDon: danhSachHD) {
 			String trangThai = "";
 			if(hoaDon.getTrangThai()) trangThai = "Đã thanh toán";
 			else trangThai = "Chưa thanh toán";
-			tModelDSHD.addRow(new Object[] {hoaDon.getMaPhieu(),hoaDon.getKhachHang().getMa(), hoaDon.getNhanVien().getMa(), hoaDon.getNgayLap(), hoaDon.getTongTien(), trangThai});
+			tModelDSHD.addRow(new Object[] {hoaDon.getMaPhieu(),hoaDon.getKhachHang().getMa(), hoaDon.getKhachHang().getHoTen(),hoaDon.getNhanVien().getMa(), hoaDon.getNhanVien().getHoTen(),hoaDon.getNgayLap(), hoaDon.getTongTien(), trangThai});
 		}
 	}
 	

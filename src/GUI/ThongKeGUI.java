@@ -41,24 +41,18 @@ public class ThongKeGUI extends JPanel {
 	private static ArrayList<ArrayList<String>> danhSachDoanhThu = new ArrayList<ArrayList<String>>();
 	
 	public ThongKeGUI() {
-		setSize(880,585);
+		setSize(1082,689);
 		
 		btnDoanhThuNgay = new JButton("Doanh thu theo ngày");
 		btnDoanhThuNgay.setBounds(10, 14, 179, 21);
 		btnDoanhThuNgay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				SwingUtilities.invokeLater(new Runnable() {
-//			        @Override
-//			        public void run() {
-//			        	thongKeDoanhThuGUI();
-//			        }
-//			    });
 				showDoanhThuBanHang(e);
 			}
 		});
 		
 		
-		panelDoanhThu.setBounds(10, 45, 860, 530);
+		panelDoanhThu.setBounds(10, 45, 1016, 530);
 		add(panelDoanhThu);
 		setLayout(null);
 		add(btnDoanhThuNgay);

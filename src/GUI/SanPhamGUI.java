@@ -51,18 +51,20 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.DropMode;
+import javax.swing.JDesktopPane;
 
 public class SanPhamGUI extends JPanel {
-	JComboBox cbMaNCC = new JComboBox();
-	JComboBox cbMaLoaiSP = new JComboBox();
-	JComboBox cbGia = new JComboBox();
-	JComboBox cbLoaiSP = new JComboBox();
-	JComboBox cbTimKiem = new JComboBox();
-	JButton btnXacNhan;
-	JButton btnHuy;
-	JButton btnThemAnh;
+	private JComboBox cbMaNCC = new JComboBox();
+	private JComboBox cbMaLoaiSP = new JComboBox();
+	private JComboBox cbGia = new JComboBox();
+	private JComboBox cbLoaiSP = new JComboBox();
+	private JComboBox cbTimKiem = new JComboBox();
+	private JButton btnXacNhan;
+	private JButton btnHuy;
+	private JButton btnThemAnh;
 	
-	JLabel lblAnhSP = new JLabel("");
+	private JLabel lblAnhSP = new JLabel("");
+	private String filePath;
 	
 	private ArrayList<SanPham> danhSachSanPham = BLL.SanPhamBLL.layDanhSachSP();
 	private ArrayList<NhaCungCap> danhSachNhaCC = BLL.NhaCungCapBLL.layDanhSachNhaCC();
@@ -89,7 +91,7 @@ public class SanPhamGUI extends JPanel {
 	 * Create the panel.
 	 */
 	public SanPhamGUI() {
-		setSize(new Dimension(880, 585));
+		setSize(new Dimension(1082,689));
 		setLayout(null);
 		
 		JLabel lblQuanLy = new JLabel("QUẢN LÝ SẢN PHẨM");
@@ -100,37 +102,37 @@ public class SanPhamGUI extends JPanel {
 		
 		JPanel panelThongTinSP = new JPanel();
 		panelThongTinSP.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin s\u1EA3n ph\u1EA9m", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelThongTinSP.setBounds(10, 48, 712, 194);
+		panelThongTinSP.setBounds(10, 48, 769, 194);
 		add(panelThongTinSP);
 		panelThongTinSP.setLayout(null);
 		
 		JLabel lblMaSanPham = new JLabel("Mã sản phẩm");
-		lblMaSanPham.setBounds(199, 31, 98, 19);
+		lblMaSanPham.setBounds(190, 31, 113, 19);
 		panelThongTinSP.add(lblMaSanPham);
 		lblMaSanPham.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		JLabel lblTenSanPham = new JLabel("Tên sản phẩm");
-		lblTenSanPham.setBounds(199, 60, 98, 19);
+		JLabel lblTenSanPham = new JLabel("Tên sản phẩm *");
+		lblTenSanPham.setBounds(190, 60, 113, 19);
 		panelThongTinSP.add(lblTenSanPham);
 		lblTenSanPham.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		JLabel lblGiaNhap = new JLabel("Giá nhập");
-		lblGiaNhap.setBounds(461, 90, 86, 19);
+		JLabel lblGiaNhap = new JLabel("Giá nhập *");
+		lblGiaNhap.setBounds(474, 90, 105, 19);
 		panelThongTinSP.add(lblGiaNhap);
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		JLabel lblGiaBan = new JLabel("Giá bán");
-		lblGiaBan.setBounds(461, 119, 86, 19);
+		JLabel lblGiaBan = new JLabel("Giá bán *");
+		lblGiaBan.setBounds(474, 119, 105, 19);
 		panelThongTinSP.add(lblGiaBan);
 		lblGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		JLabel lblSoLuongTon = new JLabel("Số lượng tồn");
-		lblSoLuongTon.setBounds(461, 148, 86, 19);
+		lblSoLuongTon.setBounds(474, 148, 105, 19);
 		panelThongTinSP.add(lblSoLuongTon);
 		lblSoLuongTon.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		JLabel lblMaNhaCungCap = new JLabel("Mã nhà cung cấp");
-		lblMaNhaCungCap.setBounds(461, 32, 98, 19);
+		JLabel lblMaNhaCungCap = new JLabel("Mã nhà cung cấp *");
+		lblMaNhaCungCap.setBounds(474, 32, 105, 19);
 		panelThongTinSP.add(lblMaNhaCungCap);
 		
 		
@@ -147,7 +149,7 @@ public class SanPhamGUI extends JPanel {
 			}
 		}});
 		
-		cbMaNCC.setBounds(570, 31, 132, 21);
+		cbMaNCC.setBounds(597, 31, 162, 21);
 		Vector<String> sMaNCC = new Vector<String>();
 		sMaNCC.add("");
 		for(int i = 0; i < danhSachNhaCC.size(); i++) {
@@ -158,36 +160,36 @@ public class SanPhamGUI extends JPanel {
 		
 		tfMaSP = new JTextField();
 		tfMaSP.setEditable(false);
-		tfMaSP.setBounds(307, 32, 132, 19);
+		tfMaSP.setBounds(298, 32, 157, 19);
 		panelThongTinSP.add(tfMaSP);
 		tfMaSP.setColumns(10);
 		
 		tfTenSP = new JTextField();
 		tfTenSP.setEditable(false);
-		tfTenSP.setBounds(307, 61, 132, 19);
+		tfTenSP.setBounds(298, 61, 157, 19);
 		panelThongTinSP.add(tfTenSP);
 		tfTenSP.setColumns(10);
 		
 		tfGiaNhap = new JTextField();
 		tfGiaNhap.setEditable(false);
-		tfGiaNhap.setBounds(570, 90, 132, 19);
+		tfGiaNhap.setBounds(597, 90, 162, 19);
 		panelThongTinSP.add(tfGiaNhap);
 		tfGiaNhap.setColumns(10);
 		
 		tfGiaBan = new JTextField();
 		tfGiaBan.setEditable(false);
-		tfGiaBan.setBounds(570, 119, 132, 19);
+		tfGiaBan.setBounds(597, 119, 162, 19);
 		panelThongTinSP.add(tfGiaBan);
 		tfGiaBan.setColumns(10);
 		
 		tfSoLuong = new JTextField();
 		tfSoLuong.setEditable(false);
-		tfSoLuong.setBounds(570, 148, 132, 19);
+		tfSoLuong.setBounds(597, 148, 162, 19);
 		panelThongTinSP.add(tfSoLuong);
 		tfSoLuong.setColumns(10);
 		
 		JLabel lblTenNhaCungCap = new JLabel("Tên nhà cung cấp");
-		lblTenNhaCungCap.setBounds(461, 61, 99, 19);
+		lblTenNhaCungCap.setBounds(474, 61, 105, 19);
 		panelThongTinSP.add(lblTenNhaCungCap);
 		lblTenNhaCungCap.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
@@ -197,30 +199,30 @@ public class SanPhamGUI extends JPanel {
 		tfTenNCC.setHorizontalAlignment(SwingConstants.LEFT);
 		tfTenNCC.setAlignmentX(Component.LEFT_ALIGNMENT);
 		tfTenNCC.setEditable(false);
-		tfTenNCC.setBounds(570, 61, 132, 19);
+		tfTenNCC.setBounds(597, 61, 162, 19);
 		panelThongTinSP.add(tfTenNCC);
 		tfTenNCC.setColumns(10);
 		
-		JLabel lblMaLoaiSP = new JLabel("Mã loại sản phẩm");
+		JLabel lblMaLoaiSP = new JLabel("Mã loại sản phẩm *");
 		lblMaLoaiSP.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMaLoaiSP.setBounds(199, 90, 98, 19);
+		lblMaLoaiSP.setBounds(190, 90, 113, 19);
 		panelThongTinSP.add(lblMaLoaiSP);
 		
 		JLabel lblTenLoaiSP = new JLabel("Tên loại sản phẩm");
 		lblTenLoaiSP.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblTenLoaiSP.setBounds(199, 118, 104, 19);
+		lblTenLoaiSP.setBounds(190, 118, 113, 19);
 		panelThongTinSP.add(lblTenLoaiSP);
 		
 		tfTenLoaiSP = new JTextField();
 		tfTenLoaiSP.setEditable(false);
 		tfTenLoaiSP.setColumns(10);
-		tfTenLoaiSP.setBounds(307, 119, 132, 19);
+		tfTenLoaiSP.setBounds(298, 119, 157, 19);
 		panelThongTinSP.add(tfTenLoaiSP);
 		cbMaLoaiSP.setEditable(true);
 		cbMaLoaiSP.setEnabled(false);
 		
 		//CB ma loai sp
-		cbMaLoaiSP.setBounds(307, 90, 132, 21);
+		cbMaLoaiSP.setBounds(298, 90, 157, 21);
 		Vector<String> sLoaiSP = new Vector<String>();
 		sLoaiSP.add("");
 		for(int i = 0; i < danhSachLoaiSP.size(); i++) {
@@ -238,14 +240,10 @@ public class SanPhamGUI extends JPanel {
 			}
 		});
 		panelThongTinSP.add(cbMaLoaiSP);
-		lblAnhSP.setBorder(new LineBorder(new Color(0, 0, 0)));
-		
-		lblAnhSP.setBounds(10, 20, 162, 132);
-		panelThongTinSP.add(lblAnhSP);
 		
 		JPanel panelDanhSachSP = new JPanel();
 		panelDanhSachSP.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EA3n ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelDanhSachSP.setBounds(10, 330, 856, 243);
+		panelDanhSachSP.setBounds(10, 330, 913, 243);
 		add(panelDanhSachSP);
 		panelDanhSachSP.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -280,24 +278,27 @@ public class SanPhamGUI extends JPanel {
 				chonAnh();
 			}
 		});
-		btnThemAnh.setBounds(37, 163, 104, 21);
+		btnThemAnh.setBounds(30, 163, 104, 21);
 		panelThongTinSP.add(btnThemAnh);
 		
 		JLabel lblChatLieu = new JLabel("Chất liệu");
 		lblChatLieu.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblChatLieu.setBounds(199, 148, 104, 19);
+		lblChatLieu.setBounds(190, 148, 113, 19);
 		panelThongTinSP.add(lblChatLieu);
 		
 		tfChatLieu = new JTextField();
 		tfChatLieu.setEditable(false);
 		tfChatLieu.setColumns(10);
-		tfChatLieu.setBounds(307, 149, 132, 19);
+		tfChatLieu.setBounds(298, 149, 157, 19);
 		panelThongTinSP.add(tfChatLieu);
+		lblAnhSP.setBounds(10, 31, 154, 122);
+		panelThongTinSP.add(lblAnhSP);
+		lblAnhSP.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		// Panel chuc nang
 		JPanel panelChucNang = new JPanel();
 		panelChucNang.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Ch\u1EE9c  n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelChucNang.setBounds(732, 48, 134, 272);
+		panelChucNang.setBounds(789, 48, 134, 272);
 		add(panelChucNang);
 		panelChucNang.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -464,7 +465,7 @@ public class SanPhamGUI extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(599, 245, 123, 75);
+		panel_1.setBounds(618, 245, 123, 75);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -504,21 +505,22 @@ public class SanPhamGUI extends JPanel {
 			}
 		});
 		btnLoaiSP.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnLoaiSP.setBounds(732, 10, 134, 29);
+		btnLoaiSP.setBounds(789, 13, 134, 29);
 		add(btnLoaiSP);
 		
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
-		hienThiDanhSachSP(danhSachSanPham);
+		hienThiDanhSachSP(BLL.SanPhamBLL.layDanhSachSP());
 	}
 	
 	//------------------------------CHUC NANG----------------------------//
 	
 	//Hien thi danh sach san pham
-	private void hienThiDanhSachSP(ArrayList<SanPham> danhSachSanPham) {
+	private void hienThiDanhSachSP(ArrayList<SanPham> dssp) {
 		tableModel.setRowCount(0);
+		danhSachSanPham = dssp;
 		for(SanPham sp : danhSachSanPham){
 			String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
 			tableModel.addRow(sanPham);
@@ -639,60 +641,86 @@ public class SanPhamGUI extends JPanel {
 		double giaBan = Double.parseDouble(tfGiaBan.getText().toString());
 		int soLuong = 0;
 		byte[] anhSanPham = anhFile;
+		String fp = filePath; 
 		LoaiSanPham loaiSP = new LoaiSanPham(maLoaiSP,tenLoaiSP);
 		NhaCungCap nhaCC = new NhaCungCap();
 		nhaCC.setMaNhaCC(maNCC);nhaCC.setTenNhaCC(tenNCC);
-		SanPham sanPham = new SanPham(maSP, tenSP, chatLieu, loaiSP ,nhaCC,giaNhap,giaBan,soLuong,anhSanPham);
+		SanPham sanPham = new SanPham(maSP, tenSP, chatLieu, loaiSP ,nhaCC,giaNhap,giaBan,soLuong,anhSanPham,fp);
 		return sanPham;
 	}
 	
 	// Xac nhan
 	private void xacNhan() {
-		if(confirmMode == "Them") {
-			try {
-				SanPham sanPham = themVaSua();
-				sanPham.setMaSanPham(taoMaSanPham());
-				int c = JOptionPane.showConfirmDialog(new GiaoDienGUI(), "Xác nhận thêm sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-				if(c == 0 && BLL.SanPhamBLL.themSanPham(sanPham)) {
-					JOptionPane.showMessageDialog(new GiaoDienGUI(), "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else JOptionPane.showMessageDialog(new GiaoDienGUI(), "Thêm không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-			}
-			catch(Exception ex) {
-				System.out.println(ex.getMessage());
-			}
-		}
-		else if(confirmMode == "Xoa") {
-			try {
-				int i = tableSanPham.getSelectedRow();
-				if(i>=0) {
-					int c = JOptionPane.showConfirmDialog(new GiaoDienGUI(), "Xác nhận xóa sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-					if(c == 0 && BLL.SanPhamBLL.xoaSanPham(danhSachSanPham.get(i))) {
-						JOptionPane.showMessageDialog(new SanPhamGUI(), "Xóa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		if(kiemTraThongTinSP()) {
+			if(confirmMode == "Them" ) {
+				try {
+					SanPham sanPham = themVaSua();
+					sanPham.setMaSanPham(taoMaSanPham());
+					int c = JOptionPane.showConfirmDialog(null, "Xác nhận thêm sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+					if(c == 0 && BLL.SanPhamBLL.themSanPham(sanPham)) {
+						JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 					}
-					else JOptionPane.showMessageDialog(new SanPhamGUI(), "Xóa không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					else JOptionPane.showMessageDialog(null, "Thêm không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				}
+				catch(Exception ex) {
+					System.out.println(ex.getMessage());
 				}
 			}
-			catch(Exception ex){
-				System.out.println(ex.getMessage());
-			}
-		}
-		else if(confirmMode == "Sua") {
-			try {
-				SanPham sanPham = themVaSua();
-				sanPham.setSoLuong(Integer.parseInt(tfSoLuong.getText()));
-				int c = JOptionPane.showConfirmDialog(new GiaoDienGUI(), "Xác nhận sửa sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-				if(c == 0 && BLL.SanPhamBLL.suaSanPham(sanPham)) {
-					JOptionPane.showMessageDialog(new GiaoDienGUI(), "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			else if(confirmMode == "Xoa") {
+				try {
+					int i = tableSanPham.getSelectedRow();
+					if(i>=0) {
+						int c = JOptionPane.showConfirmDialog(null, "Xác nhận xóa sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+						if(c == 0 && BLL.SanPhamBLL.xoaSanPham(danhSachSanPham.get(i))) {
+							JOptionPane.showMessageDialog(new SanPhamGUI(), "Xóa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else JOptionPane.showMessageDialog(new SanPhamGUI(), "Xóa không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
-				else JOptionPane.showMessageDialog(new GiaoDienGUI(), "Sửa không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				catch(Exception ex){
+					System.out.println(ex.getMessage());
+				}
 			}
-			catch(Exception ex) {
-				System.out.println(ex.getMessage());
+			else if(confirmMode == "Sua") {
+				try {
+					SanPham sanPham = themVaSua();
+					sanPham.setSoLuong(Integer.parseInt(tfSoLuong.getText()));
+					int c = JOptionPane.showConfirmDialog(null, "Xác nhận sửa sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+					if(c == 0 && BLL.SanPhamBLL.suaSanPham(sanPham)) {
+						JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else JOptionPane.showMessageDialog(null, "Sửa không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				}
+				catch(Exception ex) {
+					System.out.println(ex.getMessage());
+				}
 			}
+			refresh();
+			hienThiDanhSachSP(BLL.SanPhamBLL.layDanhSachSP());
+		} 
+	}
+	
+	private boolean kiemTraThongTinSP() {
+		if(tfTenSP.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Tên sản phẩm không được để trống", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		} else if(cbMaLoaiSP.getSelectedItem().equals(null)){
+			JOptionPane.showMessageDialog(null, "Mã loại sản phẩm chưa chọn", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		} else if(cbMaNCC.getSelectedItem().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Mã nhà cung cấp chưa chọn", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		} else if(!tfGiaNhap.getText().equals("") && !tfGiaBan.getText().equals("")) {
+			if(!(tfGiaNhap.getText().matches("[0-9].+") && tfGiaBan.getText().matches("[0-9].+"))) {
+				JOptionPane.showMessageDialog(null, "Giá tiền không hợp lệ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Giá tiền không được để trống", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			return false;
 		}
-		refresh();
-		hienThiDanhSachSP(BLL.SanPhamBLL.layDanhSachSP());
 	}
 	
 	// Xoa thong tin trong textfield
@@ -727,10 +755,11 @@ public class SanPhamGUI extends JPanel {
 			fc.setDialogTitle("Chọn ảnh");
 			fc.showOpenDialog(new SanPhamGUI());
 			File file = fc.getSelectedFile();
-			String filePath = file.getAbsolutePath();
+			filePath = file.toString();
 			if(filePath != null) {
 				ImageIcon imageIcon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(lblAnhSP.getWidth(), lblAnhSP.getHeight(), Image.SCALE_SMOOTH));
 				lblAnhSP.setIcon(imageIcon);
+//				System.out.println(lblAnhSP.getWidth() + " " + lblAnhSP.getHeight() + " " + lblAnhSP.getIcon().getIconWidth() + " " + lblAnhSP.getIcon().getIconHeight());
 				FileInputStream fis = new FileInputStream(file);
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				byte[] buf = new byte[1024];

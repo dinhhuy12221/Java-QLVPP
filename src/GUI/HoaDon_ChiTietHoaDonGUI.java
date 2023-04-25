@@ -26,7 +26,7 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 
-public class ChiTietHoaDonGUI extends JFrame {
+public class HoaDon_ChiTietHoaDonGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfMaKH;
@@ -40,13 +40,13 @@ public class ChiTietHoaDonGUI extends JFrame {
 	JScrollPane spCTHD;
 	
 	
-	private int index = HoaDonGUI.tableDSHD.getSelectedRow();
+	public int index;
 	private JTextField tfMaHD;
 
 	/**
 	 * Create the 
 	 */
-	public ChiTietHoaDonGUI() {
+	public HoaDon_ChiTietHoaDonGUI() {
 		setTitle("Chi tiết hóa đơn");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JButton btnDong = new JButton("Đóng");
@@ -150,14 +150,11 @@ public class ChiTietHoaDonGUI extends JFrame {
 		lbMaHD.setText("Mã khách hàng");
 		lbMaHD.setBounds(10, 34, 87, 20);
 		getContentPane().add(lbMaHD);
-		
-		hienThiCTHD();
-		
+				
 		setLocationRelativeTo(null);
-		setVisible(true);
 	}
 	
-	private void hienThiCTHD() {
+	public void hienThiCTHD() {
 		try {
 			if(index >= 0) {
 				for (ChiTietPhieu ctp : HoaDonGUI.danhSachHD.get(index).getDSCT()) {

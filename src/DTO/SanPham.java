@@ -10,6 +10,7 @@ public class SanPham {
     private double giaBan;
     private int soLuong;
     private byte[] anhSanPham;
+    private String filePath;
 
     public SanPham(){
         this.maSanPham = "";
@@ -21,9 +22,10 @@ public class SanPham {
         this.giaBan = 0;
         this.soLuong = 0;
         this.anhSanPham = null;
+        this.filePath = "";
     }
 
-    public SanPham(String maSanPham, String tenSanPham, String chatLieu, LoaiSanPham loaiSanPham, NhaCungCap nhaCC, double giaNhap, double giaBan, int soLuong, byte[] anhSanPham){
+    public SanPham(String maSanPham, String tenSanPham, String chatLieu, LoaiSanPham loaiSanPham, NhaCungCap nhaCC, double giaNhap, double giaBan, int soLuong, byte[] anhSanPham, String filePath){
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.chatLieu = chatLieu;
@@ -33,6 +35,7 @@ public class SanPham {
         this.giaBan = giaBan;
         this.soLuong = soLuong;
         this.anhSanPham = anhSanPham;
+        this.filePath = filePath;
     }
 
     public void setMaSanPham(String maSanPham){
@@ -105,5 +108,13 @@ public class SanPham {
     
     public byte[] getAnhSanPham() {
     	return this.anhSanPham;
+    }
+    
+    public void setFilePath(String filePath) {
+    	this.filePath = filePath;
+    }
+    
+    public String getFilePath() {
+    	return this.filePath;
     }
 }

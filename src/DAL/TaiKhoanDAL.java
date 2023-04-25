@@ -80,18 +80,18 @@ public class TaiKhoanDAL extends DatabaseAccess{
     	ArrayList<TaiKhoan> dstk = new ArrayList<TaiKhoan>();
     	try {
     		getConnection();
-	    	String s = "SELECT TK.TEN_DANG_NHAP, NV.HO_TEN, CV.TEN_CHUC_VU ,TK.MAT_KHAU, TK.TINH_TRANG FROM TAI_KHOAN TK, NHAN_VIEN NV, CHUC_VU CV WHERE TK.TEN_DANG_NHAP = MA_NV AND CV.MA_CHUC_VU = NV.MA_CHUC_VU";
+	    	String s = "SELECT TK.TEN_DANG_NHAP, NV.HO_TEN, CV.MA_CHUC_VU ,TK.MAT_KHAU, TK.TINH_TRANG FROM TAI_KHOAN TK, NHAN_VIEN NV, CHUC_VU CV WHERE TK.TEN_DANG_NHAP = MA_NV AND CV.MA_CHUC_VU = NV.MA_CHUC_VU";
 	    	statement = conn.createStatement();
 	    	resultSet = statement.executeQuery(s);
 	    	while(resultSet.next()) {
 	    		String tenDangNhap = resultSet.getString(1);
 	    		String tenNV = resultSet.getString(2);
-	    		String tenChucVu = resultSet.getString(3);
+	    		String maChucVu = resultSet.getString(3);
 	    		String matKhau = resultSet.getString(4);
 	    		String tinhTrang;
 	    		if (resultSet.getBoolean(5)) tinhTrang = "Mở khóa";
 	    		else tinhTrang = "Khóa";
-	    		TaiKhoan taiKhoan = new TaiKhoan(tenDangNhap,tenNV,new ChucVu("",tenChucVu),matKhau,tinhTrang);
+	    		TaiKhoan taiKhoan = new TaiKhoan(tenDangNhap,tenNV,matKhau,new ChucVu(maChucVu,""),"",tinhTrang);
 	    		dstk.add(taiKhoan);
 	    	}
     	}
@@ -108,17 +108,17 @@ public class TaiKhoanDAL extends DatabaseAccess{
     	ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
     	try {
     		getConnection();
-	    	String s = "SELECT NV.MA_NV, NV.HO_TEN, CV.TEN_CHUC_VU FROM NHAN_VIEN NV ,CHUC_VU CV WHERE NV.MA_CHUC_VU = CV.MA_CHUC_VU AND NV.MA_NV NOT IN (SELECT TEN_DANG_NHAP FROM TAI_KHOAN)";
+	    	String s = "SELECT NV.MA_NV, NV.HO_TEN, CV.MA_CHUC_VU FROM NHAN_VIEN NV ,CHUC_VU CV WHERE NV.MA_CHUC_VU = CV.MA_CHUC_VU AND NV.MA_NV NOT IN (SELECT TEN_DANG_NHAP FROM TAI_KHOAN)";
 	    	statement = conn.createStatement();
 	    	resultSet = statement.executeQuery(s);
 	    	while(resultSet.next()) {
 	    		String maNhanVien = resultSet.getString(1);
 	    		String tenNhanVien = resultSet.getString(2);
-	    		String tenChucVu = resultSet.getString(3);
+	    		String maChucVu = resultSet.getString(3);
 	    		NhanVien nhanVien = new NhanVien();
 	    		nhanVien.setMa(maNhanVien);
 	    		nhanVien.setHoTen(tenNhanVien);
-	    		nhanVien.setChucVu(new ChucVu("",tenChucVu));;
+	    		nhanVien.setChucVu(new ChucVu(maChucVu,""));;
 	    		dsnv.add(nhanVien);
 	    	}
     	}

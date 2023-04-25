@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class ChonKhachHangGUI extends JFrame{
+public class HoaDon_ChonKhachHangGUI extends JFrame{
 
 	private JPanel contentPane;
 	private JTextField tfTimKiem;
@@ -28,7 +28,7 @@ public class ChonKhachHangGUI extends JFrame{
 	/**
 	 * Create the ChonKhachHangGUI.
 	 */
-	public ChonKhachHangGUI() {
+	public HoaDon_ChonKhachHangGUI() {
 		setTitle("Chọn khách hàng");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JButton btnXn = new JButton("Xác nhận");

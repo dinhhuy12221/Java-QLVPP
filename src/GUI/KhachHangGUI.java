@@ -8,7 +8,7 @@ public class KhachHangGUI extends JPanel {
 	 * Create the panel.
 	 */
 	public KhachHangGUI() {
-		setSize(880,585);
+		setSize(1082,689);
 		setLayout(null);
 	}
 

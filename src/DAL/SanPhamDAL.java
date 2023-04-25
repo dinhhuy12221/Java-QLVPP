@@ -61,7 +61,7 @@ public class SanPhamDAL extends DatabaseAccess{
 		try {
 			getConnection();
 			String s = "UPDATE SAN_PHAM SET TEN_SP = '"+ sanPham.getTenSanPham() +"', CHAT_LIEU = '" + sanPham.getChatLieu() + "', MA_LOAI_SP = '" + sanPham.getLoaiSanPham().getMaLoaiSanPham() + 
-					"', MA_NCC = '" + sanPham.getNhaCC().getMaNhaCC() + "', GIA_NHAP = " + sanPham.getGiaNhap() + ", GIA_BAN = " + sanPham.getGiaBan() +", ANH_SAN_PHAM = CONVERT(varbinary, '" + (byte[]) sanPham.getAnhSanPham() + "')  WHERE MA_SP = '" + sanPham.getMaSanPham() + "'";
+					"', MA_NCC = '" + sanPham.getNhaCC().getMaNhaCC() + "', GIA_NHAP = " + sanPham.getGiaNhap() + ", GIA_BAN = " + sanPham.getGiaBan() +", ANH_SAN_PHAM = (SELECT  BULKCOLUMN FROM OPENROWSET(BULK  '" + sanPham.getFilePath() +"', SINGLE_BLOB) AS x)   WHERE MA_SP = '" + sanPham.getMaSanPham() + "'";
 			statement = conn.createStatement();
 			if(statement.executeUpdate(s) > 0) {
 				closeConnection();
@@ -145,10 +145,11 @@ public class SanPhamDAL extends DatabaseAccess{
 				double giaBan = resultSet.getDouble(9);
 				int soLuong = resultSet.getInt(10);
 				byte[] anhSanPham = resultSet.getBytes(11);
+				String fp = "";
 				LoaiSanPham loaiSP = new LoaiSanPham(maLoaiSP,tenLoaiSP);
 				NhaCungCap nhaCC = new NhaCungCap();
 				nhaCC.setMaNhaCC(maNCC);nhaCC.setTenNhaCC(tenNCC);
-				SanPham sanPham = new SanPham(maSP, tenSP, chatLieu, loaiSP, nhaCC, giaNhap, giaBan, soLuong, anhSanPham);
+				SanPham sanPham = new SanPham(maSP, tenSP, chatLieu, loaiSP, nhaCC, giaNhap, giaBan, soLuong, anhSanPham, fp);
 				danhSachSanPham.add(sanPham);
 			}
 		}

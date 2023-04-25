@@ -15,11 +15,11 @@ public class PhieuNhap extends Phieu{
         this.nhaCungCap = nhaCungCap;
     }
 
-    public void setMaNhaCC(NhaCungCap nhaCungCap){
+    public void setNhaCC(NhaCungCap nhaCungCap){
         this.nhaCungCap = nhaCungCap;
     }
 
-    public NhaCungCap getMaNhaCC(){
+    public NhaCungCap getNhaCC(){
         return this.nhaCungCap;
     }
 }

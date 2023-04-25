@@ -3,20 +3,23 @@ package DTO;
 public class TaiKhoan {
     private String tenDangNhap;
     private String tenNhanVien;
-    private ChucVu chucVu;
     private String matKhau;
+    private ChucVu chucVu;
+    private String quyenTaiKhoan;
     private String tinhTrang;
 
     public TaiKhoan(){
         this.tenDangNhap = "";
         this.tenNhanVien = "";
         this.matKhau = "";
+        this.quyenTaiKhoan = "";
         this.tinhTrang = "";
     }
 
-    public TaiKhoan(String tenDangNhap, String tenNhanVien, ChucVu chucVu, String matKhau, String tinhTrang){
+    public TaiKhoan(String tenDangNhap, String tenNhanVien,String matKhau, ChucVu chucVu,String quyenTaiKhoan, String tinhTrang){
         this.tenDangNhap = tenDangNhap;
         this.tenNhanVien = tenNhanVien;
+        this.quyenTaiKhoan = quyenTaiKhoan;
         this.chucVu = chucVu;
         this.matKhau = matKhau;
         this.tinhTrang = tinhTrang;
@@ -38,12 +41,20 @@ public class TaiKhoan {
     	return this.tenNhanVien;
     }
     
-    public void setChucVu(ChucVu chucVu){
-        this.chucVu = chucVu;
+    public void setChucVu(ChucVu chucVu) {
+    	this.chucVu = chucVu;
+    }
+    
+    public ChucVu getChucVu() {
+    	return this.chucVu;
+    }
+    
+    public void setQuyenTaiKhoan(String quyenTaiKhoan){
+        this.quyenTaiKhoan = quyenTaiKhoan;
     }
 
-    public ChucVu getChucVu(){
-        return this.chucVu;
+    public String getQuyenTaiKhoan(){
+        return this.quyenTaiKhoan;
     }
 
     public void setMatKhau(String matKhau){

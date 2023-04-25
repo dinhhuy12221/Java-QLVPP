@@ -1,10 +1,14 @@
+import DTO.TaiKhoan;
 import GUI.*;
 
 public class run {
 
 	public static void main(String[] args) {
-		GiaoDienGUI giaoDien = new GiaoDienGUI();
-		 giaoDien.setVisible(true);
+//		DangNhapGUI dangNhap = new DangNhapGUI();
+//		dangNhap.setVisible(true);
+		
+		GiaoDienGUI gd = new GiaoDienGUI(new TaiKhoan());
+		gd.setVisible(true);
 	}
 
 }

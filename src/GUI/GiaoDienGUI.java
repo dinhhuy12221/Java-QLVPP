@@ -4,12 +4,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import DTO.TaiKhoan;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.CardLayout;
+import java.awt.GridLayout;
 
 public class GiaoDienGUI extends JFrame {
 
@@ -18,7 +22,7 @@ public class GiaoDienGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GiaoDienGUI() {
+	public GiaoDienGUI(TaiKhoan taiKhoan) {
 		setResizable(false);
 		setTitle("Giao diện quản lý");
 		setLocationRelativeTo(null);
@@ -30,11 +34,11 @@ public class GiaoDienGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "DANH M\u1EE4C", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 10, 167, 585);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		JPanel panelDanhMuc = new JPanel();
+		panelDanhMuc.setBorder(new TitledBorder(null, "DANH M\u1EE4C", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panelDanhMuc.setBounds(10, 10, 167, 585);
+		contentPane.add(panelDanhMuc);
+		panelDanhMuc.setLayout(null);
 		
 		JPanel panelGiaoDien = new JPanel();
 		panelGiaoDien.setSize(new Dimension(1082,689));
@@ -62,7 +66,6 @@ public class GiaoDienGUI extends JFrame {
 			}
 		});
 		btnSanPham.setBounds(10, 23, 147, 43);
-		panel.add(btnSanPham);
 		btnSanPham.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JButton btnNhanVien = new JButton("NHÂN VIÊN");
@@ -72,7 +75,6 @@ public class GiaoDienGUI extends JFrame {
 			}
 		});
 		btnNhanVien.setBounds(10, 76, 147, 43);
-		panel.add(btnNhanVien);
 		btnNhanVien.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JButton btnKhachHang = new JButton("KHÁCH HÀNG");
@@ -83,7 +85,6 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnKhachHang.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnKhachHang.setBounds(10, 129, 147, 43);
-		panel.add(btnKhachHang);
 		
 		JButton btnNhaCC = new JButton("NHÀ CUNG CẤP");
 		btnNhaCC.addActionListener(new ActionListener() {
@@ -93,7 +94,6 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnNhaCC.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNhaCC.setBounds(10, 182, 147, 43);
-		panel.add(btnNhaCC);
 		
 		JButton btnHoaDon = new JButton("HÓA ĐƠN");
 		btnHoaDon.addActionListener(new ActionListener() {
@@ -103,7 +103,6 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnHoaDon.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnHoaDon.setBounds(10, 238, 147, 43);
-		panel.add(btnHoaDon);
 		
 		JButton btnNhapHang = new JButton("NHẬP HÀNG");
 		btnNhapHang.addActionListener(new ActionListener() {
@@ -113,7 +112,6 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnNhapHang.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNhapHang.setBounds(10, 296, 147, 43);
-		panel.add(btnNhapHang);
 		
 		JButton btnXuatHang = new JButton("XUẤT HÀNG");
 		btnXuatHang.addActionListener(new ActionListener() {
@@ -123,7 +121,6 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnXuatHang.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnXuatHang.setBounds(10, 353, 147, 43);
-		panel.add(btnXuatHang);
 		
 		JButton btnTaiKhoan = new JButton("TÀI KHOẢN");
 		btnTaiKhoan.addActionListener(new ActionListener() {
@@ -133,7 +130,6 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnTaiKhoan.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnTaiKhoan.setBounds(10, 412, 147, 43);
-		panel.add(btnTaiKhoan);
 		
 		JButton btnThongKe = new JButton("THỐNG KÊ");
 		btnThongKe.addActionListener(new ActionListener() {
@@ -143,6 +139,34 @@ public class GiaoDienGUI extends JFrame {
 		});
 		btnThongKe.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnThongKe.setBounds(10, 472, 147, 43);
-		panel.add(btnThongKe);
+		
+//		if("BANHANG".equals(taiKhoan.getChucVu().getMaChucVu())) {
+//			panelDanhMuc.add(btnKhachHang);
+//			panelDanhMuc.add(btnHoaDon);
+//		} else if("THUKHO".equals(taiKhoan.getChucVu().getMaChucVu())) {
+//			panelDanhMuc.add(btnSanPham);
+//			panelDanhMuc.add(btnNhapHang);
+//			panelDanhMuc.add(btnXuatHang);
+//		} else if("QUANLY".equals(taiKhoan.getChucVu().getMaChucVu())) {
+//			panelDanhMuc.add(btnSanPham);
+//			panelDanhMuc.add(btnNhanVien);
+//			panelDanhMuc.add(btnKhachHang);
+//			panelDanhMuc.add(btnNhaCC);
+//			panelDanhMuc.add(btnHoaDon);
+//			panelDanhMuc.add(btnNhapHang);
+//			panelDanhMuc.add(btnXuatHang);
+//			panelDanhMuc.add(btnTaiKhoan);
+//			panelDanhMuc.add(btnThongKe);
+//		}
+		
+		panelDanhMuc.add(btnSanPham);
+		panelDanhMuc.add(btnNhanVien);
+		panelDanhMuc.add(btnKhachHang);
+		panelDanhMuc.add(btnNhaCC);
+		panelDanhMuc.add(btnHoaDon);
+		panelDanhMuc.add(btnNhapHang);
+		panelDanhMuc.add(btnXuatHang);
+		panelDanhMuc.add(btnTaiKhoan);
+		panelDanhMuc.add(btnThongKe);
 	}
 }

@@ -10,19 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.util.Date;
-import java.util.Calendar;
 
 import DTO.ChiTietPhieu;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.JDatePanelImpl;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import org.jdatepicker.util.JDatePickerUtil;
-import com.toedter.calendar.JDateChooserBeanInfo;
-import com.toedter.calendar.JDayChooser;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 
@@ -42,6 +32,7 @@ public class HoaDon_ChiTietHoaDonGUI extends JFrame {
 	
 	public int index;
 	private JTextField tfMaHD;
+	private JTextField tfNgayLap;
 
 	/**
 	 * Create the 
@@ -95,7 +86,7 @@ public class HoaDon_ChiTietHoaDonGUI extends JFrame {
 		
 		JLabel lbTenKH = new JLabel();
 		lbTenKH.setText("Tên khách hàng");
-		lbTenKH.setBounds(10,119,87,20);
+		lbTenKH.setBounds(10,119,102,20);
 		
 		JLabel lbMaNV = new JLabel();
 		lbMaNV.setText("Mã nhân viên");
@@ -122,14 +113,9 @@ public class HoaDon_ChiTietHoaDonGUI extends JFrame {
 		tfTongTien.setBounds(122, 283, 150, 19);
 		getContentPane().add(tfTongTien);
 		
-		JDateChooser dcNgayLap = new JDateChooser();
-		dcNgayLap.setDateFormatString("yyyy-MM-dd\r\n\r\n");
-		dcNgayLap.setBounds(122, 239, 150, 19);
-		getContentPane().add(dcNgayLap);
-		
 		JPanel panelSanPham = new JPanel();
 		panelSanPham.setBorder(new TitledBorder(null, "S\u1EA3n ph\u1EA9m mua", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelSanPham.setBounds(323, 22, 353, 231);
+		panelSanPham.setBounds(301, 22, 375, 282);
 		getContentPane().add(panelSanPham);
 		panelSanPham.setLayout(new BorderLayout(0, 0));
 		tableCTHD.setEnabled(false);
@@ -147,9 +133,15 @@ public class HoaDon_ChiTietHoaDonGUI extends JFrame {
 		getContentPane().add(tfMaHD);
 		
 		JLabel lbMaHD = new JLabel();
-		lbMaHD.setText("Mã khách hàng");
+		lbMaHD.setText("Mã hóa đơn");
 		lbMaHD.setBounds(10, 34, 87, 20);
 		getContentPane().add(lbMaHD);
+		
+		tfNgayLap = new JTextField(HoaDonGUI.danhSachHD.get(index).getNgayLap());
+		tfNgayLap.setEditable(false);
+		tfNgayLap.setColumns(10);
+		tfNgayLap.setBounds(122, 240, 150, 19);
+		getContentPane().add(tfNgayLap);
 				
 		setLocationRelativeTo(null);
 	}

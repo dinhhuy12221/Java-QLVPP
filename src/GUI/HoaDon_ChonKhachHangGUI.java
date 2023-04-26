@@ -21,8 +21,8 @@ public class HoaDon_ChonKhachHangGUI extends JFrame{
 
 	private JPanel contentPane;
 	private JTextField tfTimKiem;
-	DefaultTableModel tModelKHChon;
-	ArrayList<KhachHang> danhSachKH = new ArrayList<KhachHang>();
+	private DefaultTableModel tModelKHChon;
+	private ArrayList<KhachHang> danhSachKH = new ArrayList<KhachHang>();
 
 
 	/**

@@ -128,8 +128,8 @@ public class SanPhamDAL extends DatabaseAccess{
 		ArrayList<SanPham> danhSachSanPham = new ArrayList<SanPham>();
 		try{
 			getConnection();
-			String s = "SELECT MA_SP, TEN_SP, CHAT_LIEU, SP.MA_LOAI_SP, LSP.TEN_LOAI_SP, NCC.MA_NCC, NCC.TEN_NCC, GIA_NHAP, GIA_BAN, SO_LUONG, ANH_SAN_PHAM "+
-						"FROM (SAN_PHAM SP INNER JOIN LOAI_SP LSP ON SP.MA_LOAI_SP = LSP.MA_LOAI_SP) INNER JOIN NHA_CUNG_CAP NCC " +
+			String s = "SELECT MA_SP, TEN_SP, CHAT_LIEU, SP.MA_LOAI_SP, NCC.MA_NCC, NCC.TEN_NCC, GIA_NHAP, GIA_BAN, SO_LUONG, ANH_SAN_PHAM "+
+						"FROM SAN_PHAM SP INNER JOIN NHA_CUNG_CAP NCC " +
 						"ON SP.MA_NCC = NCC.MA_NCC WHERE TINH_TRANG = 'True'";
 			statement = conn.createStatement();
 			resultSet = statement.executeQuery(s);
@@ -138,15 +138,14 @@ public class SanPhamDAL extends DatabaseAccess{
 				String tenSP = resultSet.getString(2);
 				String chatLieu = resultSet.getString(3);
 				String maLoaiSP = resultSet.getString(4);
-				String tenLoaiSP = resultSet.getString(5);
-				String maNCC = resultSet.getString(6);
-				String tenNCC = resultSet.getString(7);
-				double giaNhap = resultSet.getDouble(8);
-				double giaBan = resultSet.getDouble(9);
-				int soLuong = resultSet.getInt(10);
-				byte[] anhSanPham = resultSet.getBytes(11);
+				String maNCC = resultSet.getString(5);
+				String tenNCC = resultSet.getString(6);
+				double giaNhap = resultSet.getDouble(7);
+				double giaBan = resultSet.getDouble(8);
+				int soLuong = resultSet.getInt(9);
+				byte[] anhSanPham = resultSet.getBytes(10);
 				String fp = "";
-				LoaiSanPham loaiSP = new LoaiSanPham(maLoaiSP,tenLoaiSP);
+				LoaiSanPham loaiSP = new LoaiSanPham(maLoaiSP,"");
 				NhaCungCap nhaCC = new NhaCungCap();
 				nhaCC.setMaNhaCC(maNCC);nhaCC.setTenNhaCC(tenNCC);
 				SanPham sanPham = new SanPham(maSP, tenSP, chatLieu, loaiSP, nhaCC, giaNhap, giaBan, soLuong, anhSanPham, fp);

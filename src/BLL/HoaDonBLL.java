@@ -10,6 +10,10 @@ public class HoaDonBLL {
     	return DAL.HoaDonDAL.themHoaDon(hoaDon);
     }
     
+    public static boolean xoaHoaDon(HoaDon hoaDon) {
+    	return DAL.HoaDonDAL.xoaHoaDon(hoaDon);
+    }
+    
     public static ArrayList<HoaDon> layDanhSachHD(){
     	return DAL.HoaDonDAL.layDanhSachHoaDon();
     }

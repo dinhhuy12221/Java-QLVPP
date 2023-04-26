@@ -39,16 +39,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import com.toedter.calendar.JDateChooser;
 
 public class NhanVienGUI extends JPanel {
 	private JTextField textFieldTenNV;
 	private JTextField textFieldMANV;
 	private JTextField textFieldLUONG;
 	private JTextField textFieldSDT;
-	private JTextField textFieldNGAYSINH;
 	private JTextField tfTimKiem;
 	private JTextField textFieldDIACHI;
 	
@@ -69,6 +72,8 @@ public class NhanVienGUI extends JPanel {
 	private JComboBox cbMaChucVu;
 
 	String confirmMode = "";
+	
+	JDateChooser dateChooserNgaySinh;
 	
 
 	/**
@@ -193,12 +198,6 @@ public class NhanVienGUI extends JPanel {
 		lblNgaySinh.setBounds(199, 148, 104, 19);
 		panelThongTinNV.add(lblNgaySinh);
 		
-		textFieldNGAYSINH = new JTextField();
-		textFieldNGAYSINH.setEditable(false);
-		textFieldNGAYSINH.setColumns(10);
-		textFieldNGAYSINH.setBounds(307, 149, 132, 19);
-		panelThongTinNV.add(textFieldNGAYSINH);
-		
 		textFieldDIACHI = new JTextField();
 		textFieldDIACHI.setEditable(false);
 		textFieldDIACHI.setColumns(10);
@@ -218,6 +217,12 @@ public class NhanVienGUI extends JPanel {
 		textFieldTenLoaiCV.setAlignmentX(0.0f);
 		textFieldTenLoaiCV.setBounds(570, 60, 132, 19);
 		panelThongTinNV.add(textFieldTenLoaiCV);
+		
+		dateChooserNgaySinh = new JDateChooser();
+		dateChooserNgaySinh.setDateFormatString("yyyy-MM-dd");
+		dateChooserNgaySinh.setEnabled(false);
+		dateChooserNgaySinh.setBounds(307, 148, 132, 19);
+		panelThongTinNV.add(dateChooserNgaySinh);
 		
 		JPanel panelChucNang = new JPanel();
 		panelChucNang.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Ch\u1EE9c  n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -278,17 +283,17 @@ public class NhanVienGUI extends JPanel {
 		tfTimKiem.getDocument().addDocumentListener((new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				timKiemSP();
+				timKiemNV();
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				timKiemSP();
+				timKiemNV();
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				timKiemSP();	
+				timKiemNV();	
 			}
 		}));
 		
@@ -301,7 +306,7 @@ public class NhanVienGUI extends JPanel {
 		cbMACHUCVU1.addItem("Thủ kho");
 		cbMACHUCVU1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				timKiemSP();
+				timKiemNV();
 			}
 		});
 		
@@ -313,7 +318,7 @@ public class NhanVienGUI extends JPanel {
 		cbTimKiem.addItem("mã nhân viên");
 		cbTimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				timKiemSP();
+				timKiemNV();
 			}
 		});
 		
@@ -399,7 +404,8 @@ private void chonNhanVien() {
 			textFieldMANV.setText(table.getValueAt(i, 0)+"");
 			textFieldDIACHI.setText(table.getValueAt(i, 2)+"");
 			textFieldSDT.setText(table.getValueAt(i, 3)+"");
-			textFieldNGAYSINH.setText(table.getValueAt(i, 4)+"");
+			Date d = new SimpleDateFormat("yyyy-MM-dd").parse(table.getValueAt(i, 4)+"");
+			dateChooserNgaySinh.setDate(d);
 			cbMaChucVu.setSelectedItem(table.getValueAt(i, 5)+"");
 			textFieldLUONG.setText(table.getValueAt(i, 6)+"");
 			if(danhSachNhanVien.get(i).getAnhNhanVien()!=null) {
@@ -441,8 +447,16 @@ private NhanVien themVaSua() {
 	String maCV = (String) cbMaChucVu.getSelectedItem();
 	String tenCV = textFieldTenLoaiCV.getText();
 	String SDT = textFieldSDT.getText();
-
-	String ngaysinh = textFieldNGAYSINH.getText();
+	Date d;
+	String ngaysinh = "";
+	try {
+		d = new SimpleDateFormat("yyyy-MM-dd").parse(dateChooserNgaySinh.getDate().toString());
+		ngaysinh = d.toString();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println(ngaysinh);
 	double LUONG = Double.parseDouble(textFieldLUONG.getText().toString());
 	byte[] anhNV = anhFile;
 	ChucVu loaiCV= new ChucVu(maCV,tenCV);
@@ -455,7 +469,7 @@ private void refresh() {
 	textFieldTenNV.setText("");
 	textFieldDIACHI.setText("");
 	textFieldSDT.setText("");
-	textFieldNGAYSINH.setText("");
+	dateChooserNgaySinh.setDate(null);;
 	textFieldLUONG.setText("");
 	lblAnhNV_1.setIcon(null);
 }
@@ -465,7 +479,7 @@ private void isEnable(boolean i) {
 	textFieldTenNV.setEditable(i);
 	textFieldDIACHI.setEditable(i);
 	textFieldSDT.setEditable(i);
-	textFieldNGAYSINH.setEditable(i);
+	dateChooserNgaySinh.setEnabled(i);
 	textFieldLUONG.setEditable(i);
 	btnThemAnh.setEnabled(i);
 	btnHy.setEnabled(true);
@@ -511,7 +525,7 @@ private void xacNhan() {
 	else if(confirmMode == "Sua") {
 		try {
 			NhanVien NhanVien = themVaSua();
-			int c = JOptionPane.showConfirmDialog(null, "Xác Nhận Sửa Sản Phẩm", "Xác Nhận", JOptionPane.YES_NO_OPTION);
+			int c = JOptionPane.showConfirmDialog(null, "Xác Nhận Sửa Nhân Viên", "Xác Nhận", JOptionPane.YES_NO_OPTION);
 			if(c == 0 && BLL.NhanVienBLL.SuaNhanVien(NhanVien)) {
 				JOptionPane.showMessageDialog(null, "Sửa thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -549,7 +563,7 @@ private void chonAnh() {
 	}
 }
 //Tim kiem san pham
-private void timKiemSP() {
+private void timKiemNV() {
 	try {
 		ArrayList<NhanVien> danhSachNhanVien1 = new ArrayList<NhanVien>();
 		ArrayList<NhanVien> danhSachNhanVien2 = null;
@@ -592,26 +606,6 @@ private void timKiemSP() {
 				hienThiDanhSachNV(danhSachNhanVien2);
 			}
 		}
-		
-//		int loaiGiaSP = cbGia.getSelectedIndex();
-//		if(loaiGiaSP != 0 && !tfTu.getText().toString().equals("") && !tfDen.getText().toString().equals("")) {
-//			if(!loaiSP.equals("")) danhSachSanPham3 = danhSachSanPham1;
-//			else if(loaiTimKiem != 0) danhSachSanPham3 = danhSachSanPham2;
-//			else danhSachSanPham3 = danhSachSanPham;
-//			tableModel.setRowCount(0);
-//			double giaDau = Double.parseDouble(tfTu.getText());
-//			double giaCuoi = Double.parseDouble(tfDen.getText());
-//			for(SanPham sp : danhSachSanPham3) {
-//				boolean check = false;
-//				if(loaiGiaSP == 1 && sp.getGiaNhap() >= giaDau && sp.getGiaNhap() <= giaCuoi) check = true;
-//				else if(loaiGiaSP == 2 && sp.getGiaBan() >= giaDau && sp.getGiaBan() <= giaCuoi) check = true;
-//				if(check == true) {
-//					String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
-//					tableModel.addRow(sanPham);
-//				}
-//			}
-//			
-//		}
 	}
 	catch(Exception ex) {
 		System.out.print(ex.getMessage());

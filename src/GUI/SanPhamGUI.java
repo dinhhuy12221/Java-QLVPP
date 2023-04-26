@@ -3,7 +3,6 @@ package GUI;
 import DTO.LoaiSanPham;
 import DTO.SanPham;
 import DTO.NhaCungCap;
-import DTO.NhanVien;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -17,8 +16,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
@@ -34,24 +31,12 @@ import javax.swing.border.EtchedBorder;
 import java.awt.GridLayout;
 import java.awt.Image;
 
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Component;
-
-import java.math.*;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import javax.swing.DropMode;
-import javax.swing.JDesktopPane;
 
 public class SanPhamGUI extends JPanel {
 	private JComboBox cbMaNCC = new JComboBox();
@@ -59,6 +44,7 @@ public class SanPhamGUI extends JPanel {
 	private JComboBox cbGia = new JComboBox();
 	private JComboBox cbLoaiSP = new JComboBox();
 	private JComboBox cbTimKiem = new JComboBox();
+	
 	private JButton btnXacNhan;
 	private JButton btnHuy;
 	private JButton btnThemAnh;
@@ -66,9 +52,9 @@ public class SanPhamGUI extends JPanel {
 	private JLabel lblAnhSP = new JLabel("");
 	private String filePath;
 	
-	private ArrayList<SanPham> danhSachSanPham = BLL.SanPhamBLL.layDanhSachSP();
-	private ArrayList<NhaCungCap> danhSachNhaCC = BLL.NhaCungCapBLL.layDanhSachNhaCC();
-	private ArrayList<LoaiSanPham> danhSachLoaiSP = BLL.LoaiSanPhamBLL.layDanhSachLoaiSP();
+	private ArrayList<SanPham> danhSachSP = new ArrayList<SanPham>();
+	private ArrayList<NhaCungCap> danhSachNCC = new ArrayList<NhaCungCap>();
+	private ArrayList<LoaiSanPham> danhSachLSP = new ArrayList<LoaiSanPham>();
 	
 	private JTextField tfMaSP;
 	private JTextField tfTenSP;
@@ -78,12 +64,14 @@ public class SanPhamGUI extends JPanel {
 	private JTextField tfTenNCC;
 	private JTable tableSanPham;
 	private JTextField tfTimKiem;
-	private JTextField tfTu;
-	private JTextField tfDen;
+	private JTextField tfGiaMin;
+	private JTextField tfGiaMax;
 	private JTextField tfTenLoaiSP;
 	private byte[] anhFile;
 	private JTextField tfChatLieu;
 	private DefaultTableModel tableModel;
+	
+	private SanPham_LoaiSanPhamGUI lspgui = new SanPham_LoaiSanPhamGUI();
 	
 	String confirmMode = "";
 
@@ -91,6 +79,10 @@ public class SanPhamGUI extends JPanel {
 	 * Create the panel.
 	 */
 	public SanPhamGUI() {
+		danhSachSP = BLL.SanPhamBLL.layDanhSachSP();
+		danhSachNCC = BLL.NhaCungCapBLL.layDanhSachNhaCC();
+		danhSachLSP = BLL.LoaiSanPhamBLL.layDanhSachLoaiSP();
+		
 		setSize(new Dimension(1082,689));
 		setLayout(null);
 		
@@ -141,7 +133,7 @@ public class SanPhamGUI extends JPanel {
 		cbMaNCC.setEnabled(false);
 		cbMaNCC.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			for(NhaCungCap ncc: danhSachNhaCC) {
+			for(NhaCungCap ncc: danhSachNCC) {
 				if(ncc.getMaNhaCC().equals(cbMaNCC.getSelectedItem().toString())) {
 					tfTenNCC.setText(ncc.getTenNhaCC());
 					break;
@@ -152,8 +144,8 @@ public class SanPhamGUI extends JPanel {
 		cbMaNCC.setBounds(597, 31, 162, 21);
 		Vector<String> sMaNCC = new Vector<String>();
 		sMaNCC.add("");
-		for(int i = 0; i < danhSachNhaCC.size(); i++) {
-			sMaNCC.add(danhSachNhaCC.get(i).getMaNhaCC());
+		for(int i = 0; i < danhSachNCC.size(); i++) {
+			sMaNCC.add(danhSachNCC.get(i).getMaNhaCC());
 		}
 		cbMaNCC.setModel(new DefaultComboBoxModel(sMaNCC));
 		panelThongTinSP.add(cbMaNCC);
@@ -225,13 +217,13 @@ public class SanPhamGUI extends JPanel {
 		cbMaLoaiSP.setBounds(298, 90, 157, 21);
 		Vector<String> sLoaiSP = new Vector<String>();
 		sLoaiSP.add("");
-		for(int i = 0; i < danhSachLoaiSP.size(); i++) {
-			sLoaiSP.add(danhSachLoaiSP.get(i).getMaLoaiSanPham());
+		for(int i = 0; i < danhSachLSP.size(); i++) {
+			sLoaiSP.add(danhSachLSP.get(i).getMaLoaiSanPham());
 		}
 		cbMaLoaiSP.setModel(new DefaultComboBoxModel(sLoaiSP));
 		cbMaLoaiSP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for(LoaiSanPham lsp : danhSachLoaiSP) {
+				for(LoaiSanPham lsp : danhSachLSP) {
 					if(lsp.getMaLoaiSanPham().equals(cbMaLoaiSP.getSelectedItem())) {
 						tfTenLoaiSP.setText(lsp.getTenLoaiSanPham());
 						break;
@@ -343,10 +335,18 @@ public class SanPhamGUI extends JPanel {
 		panelChucNang.add(btnXuatExcel);
 		btnXuatExcel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
+		JButton btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lamMoi();
+			}
+		});
+		panelChucNang.add(btnLamMoi);
+		
 		// Panel tim kiem
 		JPanel panelTimKiem = new JPanel();
 		panelTimKiem.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTimKiem.setBounds(10, 245, 534, 75);
+		panelTimKiem.setBounds(10, 245, 572, 75);
 		add(panelTimKiem);
 		panelTimKiem.setLayout(null);
 		
@@ -358,23 +358,23 @@ public class SanPhamGUI extends JPanel {
 		
 		//Textfield tim kiem tu chon
 		tfTimKiem = new JTextField();
-		tfTimKiem.getDocument().addDocumentListener((new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				timKiemSP();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				timKiemSP();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				timKiemSP();	
-			}
-		}));
-		tfTimKiem.setBounds(318, 11, 206, 19);
+//		tfTimKiem.getDocument().addDocumentListener((new DocumentListener() {
+//			@Override
+//			public void insertUpdate(DocumentEvent e) {
+//				timKiemSP();
+//			}
+//
+//			@Override
+//			public void removeUpdate(DocumentEvent e) {
+//				timKiemSP();
+//			}
+//
+//			@Override
+//			public void changedUpdate(DocumentEvent e) {
+//				timKiemSP();	
+//			}
+//		}));
+		tfTimKiem.setBounds(318, 11, 244, 19);
 		panelTimKiem.add(tfTimKiem);
 		tfTimKiem.setColumns(10);
 		
@@ -383,91 +383,111 @@ public class SanPhamGUI extends JPanel {
 		panelTimKiem.add(lblLoc);
 		lblLoc.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLoc.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		cbGia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timKiemSP();
-			}
-		});
+//		cbGia.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				timKiemSP();
+//			}
+//		});
 		
 		cbGia.setBounds(57, 39, 84, 21);
 		panelTimKiem.add(cbGia);
 		cbGia.setModel(new DefaultComboBoxModel(new String[] {"", "Giá nhập", "Giá bán"}));
 		
-		tfTu = new JTextField();
-		tfTu.getDocument().addDocumentListener((new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				timKiemSP();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				timKiemSP();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				timKiemSP();	
-			}
-		}));
-		tfTu.setBounds(151, 42, 105, 19);
-		panelTimKiem.add(tfTu);
-		tfTu.setColumns(10);
+		tfGiaMin = new JTextField();
+//		tfGiaMin.getDocument().addDocumentListener((new DocumentListener() {
+//			@Override
+//			public void insertUpdate(DocumentEvent e) {
+//				timKiemSP();
+//			}
+//
+//			@Override
+//			public void removeUpdate(DocumentEvent e) {
+//				timKiemSP();
+//			}
+//
+//			@Override
+//			public void changedUpdate(DocumentEvent e) {
+//				timKiemSP();	
+//			}
+//		}));
+		tfGiaMin.setBounds(151, 42, 84, 19);
+		panelTimKiem.add(tfGiaMin);
+		tfGiaMin.setColumns(10);
 		
-		tfDen = new JTextField();
-		tfDen.getDocument().addDocumentListener((new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				timKiemSP();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				timKiemSP();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				timKiemSP();	
-			}
-		}));
-		tfDen.setBounds(280, 41, 105, 19);
-		panelTimKiem.add(tfDen);
-		tfDen.setColumns(10);
+		tfGiaMax = new JTextField();
+//		tfGiaMax.getDocument().addDocumentListener((new DocumentListener() {
+//			@Override
+//			public void insertUpdate(DocumentEvent e) {
+//				timKiemSP();
+//			}
+//
+//			@Override
+//			public void removeUpdate(DocumentEvent e) {
+//				timKiemSP();
+//			}
+//
+//			@Override
+//			public void changedUpdate(DocumentEvent e) {
+//				timKiemSP();	
+//			}
+//		}));
+		tfGiaMax.setBounds(264, 40, 84, 19);
+		panelTimKiem.add(tfGiaMax);
+		tfGiaMax.setColumns(10);
 		
 		JLabel lblDauNgang = new JLabel("-");
 		lblDauNgang.setEnabled(false);
 		lblDauNgang.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblDauNgang.setBounds(266, 43, 9, 13);
+		lblDauNgang.setBounds(245, 42, 9, 13);
 		panelTimKiem.add(lblDauNgang);
 		
 		// Combobox tim kiem theo loai san pham
 		cbLoaiSP = new JComboBox();
-		cbLoaiSP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timKiemSP();
-			}
-		});
+//		cbLoaiSP.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				timKiemSP();
+//			}
+//		});
 		cbLoaiSP.setModel(new DefaultComboBoxModel(new String[] {"", "Bút viết", "Tài liệu", "Tập giấy", "Văn phòng phẩm"}));
 		cbLoaiSP.setBounds(76, 11, 109, 21);
 		panelTimKiem.add(cbLoaiSP);
 		
 		// Combobox tim kiem theo ma sp, ten sp, ma ncc, ten ncc
 		cbTimKiem = new JComboBox();
-		cbTimKiem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timKiemSP();
-			}
-		});
+//		cbTimKiem.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				timKiemSP();
+//			}
+//		});
 		cbTimKiem.setBounds(195, 10, 113, 21);
 		cbTimKiem.setModel(new DefaultComboBoxModel(new String[] {"", "Mã sản phẩm", "Tên sản phẩm", "Mã nhà cung cấp", "Tên nhà cung cấp"}));
 		panelTimKiem.add(cbTimKiem);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(618, 245, 123, 75);
-		add(panel_1);
-		panel_1.setLayout(null);
+		JButton btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				timKiemSP();
+			}
+		});
+		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnTimKiem.setBounds(358, 40, 92, 23);
+		panelTimKiem.add(btnTimKiem);
+		
+		JButton btnHuyTimKiem = new JButton("Hủy");
+		btnHuyTimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hienThiDanhSachSP(BLL.SanPhamBLL.layDanhSachSP());
+			}
+		});
+		btnHuyTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnHuyTimKiem.setBounds(470, 40, 92, 23);
+		panelTimKiem.add(btnHuyTimKiem);
+		
+		JPanel panelThucHien = new JPanel();
+		panelThucHien.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelThucHien.setBounds(618, 245, 123, 75);
+		add(panelThucHien);
+		panelThucHien.setLayout(null);
 		
 		btnXacNhan = new JButton("Xác nhận");
 		btnXacNhan.setEnabled(false);
@@ -478,7 +498,7 @@ public class SanPhamGUI extends JPanel {
 		});
 		btnXacNhan.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnXacNhan.setBounds(10, 10, 103, 23);
-		panel_1.add(btnXacNhan);
+		panelThucHien.add(btnXacNhan);
 		
 		// Button huy
 		btnHuy = new JButton("Hủy");
@@ -496,7 +516,7 @@ public class SanPhamGUI extends JPanel {
 		});
 		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnHuy.setBounds(10, 43, 103, 23);
-		panel_1.add(btnHuy);
+		panelThucHien.add(btnHuy);
 		
 		JButton btnLoaiSP = new JButton("Loại sản phẩm");
 		btnLoaiSP.addActionListener(new ActionListener() {
@@ -507,7 +527,6 @@ public class SanPhamGUI extends JPanel {
 		btnLoaiSP.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnLoaiSP.setBounds(789, 13, 134, 29);
 		add(btnLoaiSP);
-		
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -520,8 +539,8 @@ public class SanPhamGUI extends JPanel {
 	//Hien thi danh sach san pham
 	private void hienThiDanhSachSP(ArrayList<SanPham> dssp) {
 		tableModel.setRowCount(0);
-		danhSachSanPham = dssp;
-		for(SanPham sp : danhSachSanPham){
+		danhSachSP = dssp;
+		for(SanPham sp : danhSachSP){
 			String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
 			tableModel.addRow(sanPham);
 		}
@@ -529,80 +548,90 @@ public class SanPhamGUI extends JPanel {
 	
 	//Tim kiem san pham
 	private void timKiemSP() {
+		String loaiSP = "";
+		int loaiTimKiem = 0;
+		String loaiGia = "";
+		String timKiem = "";
+		double giaMin = 0;
+		double giaMax = 0;
+		
+		ArrayList<Integer> itemIndexes = new ArrayList<Integer>();
+		
 		try {
-			ArrayList<SanPham> danhSachSanPham1 = new ArrayList<SanPham>();
-			ArrayList<SanPham> danhSachSanPham2 = null;
-//			ArrayList<SanPham> danhSachSanPham3 = null;
+			if(!tfTimKiem.getText().trim().equals("")) {
+				timKiem = tfTimKiem.getText().toString();
+			}
 			
-			// cbLoaiSP
-			String loaiSP = cbLoaiSP.getSelectedItem() + "";
-			if(!loaiSP.equals("")) {
-				tableModel.setRowCount(0);
-				for(SanPham sp : danhSachSanPham) {
-					if(loaiSP.equals(sp.getLoaiSanPham().getTenLoaiSanPham())) {
-						String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
-						tableModel.addRow(sanPham);
-						danhSachSanPham1.add(sp);
+			if(!cbLoaiSP.getSelectedItem().toString().equals("")) {
+				loaiSP = cbLoaiSP.getSelectedItem().toString();
+				itemIndexes.add(1); 
+			}
+			if(! cbTimKiem.getSelectedItem().toString().equals("")) {
+				loaiTimKiem = cbTimKiem.getSelectedIndex();
+				itemIndexes.add(2);
+			}
+			if (! cbGia.getSelectedItem().toString().equals("")) {
+				loaiGia = cbGia.getSelectedItem().toString();
+				if(! (tfGiaMin.getText().trim().equals("") && tfGiaMax.getText().trim().equals(""))) {
+					try {
+						giaMin = Double.parseDouble(tfGiaMin.getText().trim());
+						giaMax = Double.parseDouble(tfGiaMax.getText().trim());
+						itemIndexes.add(3);
+					} catch(Exception ex) {
+						JOptionPane.showMessageDialog(null, "Giá nhập hoặc giá bán không hợp lệ", "Thông báo", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
+			danhSachSP = BLL.SanPhamBLL.layDanhSachSP();
 			
-			// cbTimKiem
-			int loaiTimKiem = cbTimKiem.getSelectedIndex();
-			String timKiem = tfTimKiem.getText().toLowerCase();
-			if(loaiTimKiem != 0) {
-				if(!loaiSP.equals("")) {
-					danhSachSanPham2 = danhSachSanPham1;
-				}
-				else {
-					danhSachSanPham2 = BLL.SanPhamBLL.layDanhSachSP();
-				}
-				tableModel.setRowCount(0);
-				for(SanPham sp : danhSachSanPham2) {
-					boolean check = false;
-					if(loaiTimKiem == 1 && sp.getMaSanPham().toLowerCase().contains(timKiem)) check = true;
-					else if(loaiTimKiem == 2 && sp.getTenSanPham().toLowerCase().contains(timKiem)) check = true;
-					else if(loaiTimKiem == 3 && sp.getNhaCC().getMaNhaCC().toLowerCase().contains(timKiem)) check = true;
-					else if(loaiTimKiem == 4 && sp.getNhaCC().getTenNhaCC().toLowerCase().contains(timKiem)) check = true;
-					if(check == true) {
-						String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
-						tableModel.addRow(sanPham);
+			tableModel.setRowCount(0);
+			
+			for (SanPham sp : danhSachSP) {
+				boolean check = true;
+				for(int i : itemIndexes) {
+					switch(i) {
+					case 1:
+						if(!loaiSP.equals(sp.getLoaiSanPham().getTenLoaiSanPham())) check = false;
+						break;
+					case 2:
+						switch(loaiTimKiem) {
+							case 1:
+//								System.out.println(sp.getMaSanPham() + timKiem.toUpperCase());
+								if(! sp.getMaSanPham().toUpperCase().contains(timKiem.toUpperCase())) check = false;
+								break;
+							case 2:
+								if(! sp.getTenSanPham().toUpperCase().contains(timKiem.toUpperCase())) check = false;
+								break;
+							case 3:
+								if(! sp.getNhaCC().getMaNhaCC().toUpperCase().contains(timKiem.toUpperCase())) check = false;
+								break;
+							case 4:
+								if(! sp.getNhaCC().getTenNhaCC().toUpperCase().contains(timKiem.toUpperCase())) check = false;
+								break;
+							default:
+								break;
+						}
+						break;
+					case 3:
+						if(loaiGia.equals("Giá nhập")) {
+							if(!(giaMin <= sp.getGiaNhap() && sp.getGiaNhap() <= giaMax)) check = false;
+						} else if(loaiGia.equals("Giá bán")) {
+							if(!(giaMin <= sp.getGiaBan() && sp.getGiaBan() <= giaMax)) check = false;
+						} 
+						break;
+					default:
+						break;
 					}
 				}
-				if(tfTimKiem.getText().equals("")) {
-					hienThiDanhSachSP(danhSachSanPham2);
+				if (check) {
+					String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
+					tableModel.addRow(sanPham);
 				}
 			}
-			
-//			int loaiGiaSP = cbGia.getSelectedIndex();
-//			if(loaiGiaSP != 0 && !tfTu.getText().toString().equals("") && !tfDen.getText().toString().equals("")) {
-//				if(!loaiSP.equals("")) danhSachSanPham3 = danhSachSanPham1;
-//				else if(loaiTimKiem != 0) danhSachSanPham3 = danhSachSanPham2;
-//				else danhSachSanPham3 = danhSachSanPham;
-//				tableModel.setRowCount(0);
-//				double giaDau = Double.parseDouble(tfTu.getText());
-//				double giaCuoi = Double.parseDouble(tfDen.getText());
-//				for(SanPham sp : danhSachSanPham3) {
-//					boolean check = false;
-//					if(loaiGiaSP == 1 && sp.getGiaNhap() >= giaDau && sp.getGiaNhap() <= giaCuoi) check = true;
-//					else if(loaiGiaSP == 2 && sp.getGiaBan() >= giaDau && sp.getGiaBan() <= giaCuoi) check = true;
-//					if(check == true) {
-//						String[] sanPham = {sp.getMaSanPham(),sp.getTenSanPham(),sp.getChatLieu(),sp.getLoaiSanPham().getMaLoaiSanPham(),sp.getLoaiSanPham().getTenLoaiSanPham(),sp.getNhaCC().getMaNhaCC(),sp.getNhaCC().getTenNhaCC(),sp.getGiaNhap()+"",sp.getGiaBan()+"",sp.getSoLuong()+""};
-//						tableModel.addRow(sanPham);
-//					}
-//				}
-//				
-//			}
 		}
 		catch(Exception ex) {
 			System.out.print(ex.getMessage());
 		}
-		
-		
-		
-//		if(tfTimKiem.getText().equals("")) {
-//			hienThiDanhSachSP(danhSachSanPham);
-//		}
 	}
 	
 	
@@ -671,7 +700,7 @@ public class SanPhamGUI extends JPanel {
 					int i = tableSanPham.getSelectedRow();
 					if(i>=0) {
 						int c = JOptionPane.showConfirmDialog(null, "Xác nhận xóa sản phẩm ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-						if(c == 0 && BLL.SanPhamBLL.xoaSanPham(danhSachSanPham.get(i))) {
+						if(c == 0 && BLL.SanPhamBLL.xoaSanPham(danhSachSP.get(i))) {
 							JOptionPane.showMessageDialog(new SanPhamGUI(), "Xóa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else JOptionPane.showMessageDialog(new SanPhamGUI(), "Xóa không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -749,6 +778,26 @@ public class SanPhamGUI extends JPanel {
 		tfGiaBan.setEditable(i);
 	}
 	
+	private void lamMoi() {
+		hienThiDanhSachSP(BLL.SanPhamBLL.layDanhSachSP());
+		danhSachNCC = BLL.NhaCungCapBLL.layDanhSachNhaCC();
+		danhSachLSP = BLL.LoaiSanPhamBLL.layDanhSachLoaiSP();
+		
+		Vector<String> sLoaiSP = new Vector<String>();
+		sLoaiSP.add("");
+		for(int i = 0; i < danhSachLSP.size(); i++) {
+			sLoaiSP.add(danhSachLSP.get(i).getMaLoaiSanPham());
+		}
+		cbMaLoaiSP.setModel(new DefaultComboBoxModel(sLoaiSP));
+		
+		Vector<String> sMaNCC = new Vector<String>();
+		sMaNCC.add("");
+		for(int i = 0; i < danhSachNCC.size(); i++) {
+			sMaNCC.add(danhSachNCC.get(i).getMaNhaCC());
+		}
+		cbMaNCC.setModel(new DefaultComboBoxModel(sMaNCC));
+	}
+	
 	private void chonAnh() {
 		try {
 			JFileChooser fc = new JFileChooser("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\san_pham");
@@ -759,7 +808,6 @@ public class SanPhamGUI extends JPanel {
 			if(filePath != null) {
 				ImageIcon imageIcon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(lblAnhSP.getWidth(), lblAnhSP.getHeight(), Image.SCALE_SMOOTH));
 				lblAnhSP.setIcon(imageIcon);
-//				System.out.println(lblAnhSP.getWidth() + " " + lblAnhSP.getHeight() + " " + lblAnhSP.getIcon().getIconWidth() + " " + lblAnhSP.getIcon().getIconHeight());
 				FileInputStream fis = new FileInputStream(file);
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				byte[] buf = new byte[1024];
@@ -776,24 +824,25 @@ public class SanPhamGUI extends JPanel {
 	}
 	
 	private void quanLyLoaiSP() {
+		if(!lspgui.isVisible()) lspgui.setVisible(true);
 	}
 	
 	private void chonSanPham() {
 		int i = tableSanPham.getSelectedRow();
 		if(i >= 0) {
 			try {
-				tfMaSP.setText(tableModel.getValueAt(i, 0)+"");
-				tfTenSP.setText(tableModel.getValueAt(i, 1)+"");
-				tfChatLieu.setText(tableModel.getValueAt(i, 2)+"");
-				cbMaLoaiSP.setSelectedItem(tableModel.getValueAt(i, 3)+"");
-				tfTenLoaiSP.setText(tableModel.getValueAt(i, 4)+"");
-				cbMaNCC.setSelectedItem(tableModel.getValueAt(i, 5)+"");
-				tfTenNCC.setText(tableModel.getValueAt(i, 6)+"");
-				tfGiaNhap.setText(tableModel.getValueAt(i, 7)+"");
-				tfGiaBan.setText(tableModel.getValueAt(i, 8)+"");
-				tfSoLuong.setText(tableModel.getValueAt(i, 9)+"");
-				if(danhSachSanPham.get(i).getAnhSanPham()!=null) {
-					ImageIcon imageIcon = new ImageIcon(new ImageIcon(danhSachSanPham.get(i).getAnhSanPham()).getImage().getScaledInstance(lblAnhSP.getWidth(), lblAnhSP.getHeight(), Image.SCALE_SMOOTH));
+				tfMaSP.setText(danhSachSP.get(i).getMaSanPham());
+				tfTenSP.setText(danhSachSP.get(i).getTenSanPham());
+				tfChatLieu.setText(danhSachSP.get(i).getChatLieu());
+				cbMaLoaiSP.setSelectedItem(danhSachSP.get(i).getLoaiSanPham().getMaLoaiSanPham());
+				tfTenLoaiSP.setText(danhSachSP.get(i).getLoaiSanPham().getTenLoaiSanPham());
+				cbMaNCC.setSelectedItem(danhSachSP.get(i).getNhaCC().getMaNhaCC());
+				tfTenNCC.setText(danhSachSP.get(i).getNhaCC().getTenNhaCC());
+				tfGiaNhap.setText(danhSachSP.get(i).getGiaNhap()+ "");
+				tfGiaBan.setText(danhSachSP.get(i).getGiaBan()+ "");
+				tfSoLuong.setText(danhSachSP.get(i).getSoLuong() + "");
+				if(danhSachSP.get(i).getAnhSanPham()!=null) {
+					ImageIcon imageIcon = new ImageIcon(new ImageIcon(danhSachSP.get(i).getAnhSanPham()).getImage().getScaledInstance(lblAnhSP.getWidth(), lblAnhSP.getHeight(), Image.SCALE_SMOOTH));
 					lblAnhSP.setIcon(imageIcon);
 				}
 				else lblAnhSP.setIcon(null);

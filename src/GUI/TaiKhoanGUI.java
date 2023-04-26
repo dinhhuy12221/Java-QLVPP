@@ -66,7 +66,7 @@ public class TaiKhoanGUI extends JPanel {
 		JLabel lblQunLTi = new JLabel("QUẢN LÝ TÀI KHOẢN");
 		lblQunLTi.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQunLTi.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblQunLTi.setBounds(10, 10, 856, 28);
+		lblQunLTi.setBounds(10, 10, 1062, 28);
 		add(lblQunLTi);
 		
 		JPanel panelThongTinTK = new JPanel();
@@ -213,7 +213,7 @@ public class TaiKhoanGUI extends JPanel {
 		spDSTK.setViewportView(tableDSTK);
 		
 		JPanel panelDSNV = new JPanel();
-		panelDSNV.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch nh\u00E2n vi\u00EAn ch\u01B0a m\u1EDF t\u00E0i kho\u1EA3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelDSNV.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch nh\u00E2n vi\u00EAn ch\u01B0a c\u00F3 t\u00E0i kho\u1EA3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelDSNV.setBounds(318, 56, 487, 189);
 		add(panelDSNV);
 		panelDSNV.setLayout(new GridLayout(0, 1, 0, 0));
@@ -271,31 +271,6 @@ public class TaiKhoanGUI extends JPanel {
 		tableDSTK.setEnabled(false);
 		tableDSNV.setEnabled(true);
 		status = "Them";
-		
-		
-//		
-//		JTable nvTable = new JTable();
-//		DefaultTableModel nvTableModel = new DefaultTableModel(new Object[][] {}, new String[] {"Mã nhân viên", "Tên nhân viên", "Chức vụ"});
-//		nvTable.setModel(nvTableModel);
-//		JScrollPane nvSP = new JScrollPane();
-//		
-//		ArrayList<NhanVien> dsnv = BLL.TaiKhoanBLL.layDanhSachNVChuaCoTK();
-//		for(NhanVien nv: dsnv) {
-//			nvTableModel.addRow(new Object[] {nv.getMa(),nv.getHoTen(),nv.getChucVu().getTenChucVu()});
-//		}
-//		
-//		nvTable.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int i = nvTable.getSelectedRow();
-//				if (i >= 0) {
-//						public void actionPerformed(ActionEvent e) {
-//							
-//						}
-//					});
-//				}
-//			}
-//		})
 	}
 		
 
@@ -380,19 +355,15 @@ public class TaiKhoanGUI extends JPanel {
 			catch(Exception ex) {
 				System.out.println(ex.getMessage());
 			}
-			hienThiDanhSachTK(BLL.TaiKhoanBLL.layDanhSachTaiKhoan());
 			hienThiDanhSachNV(BLL.TaiKhoanBLL.layDanhSachNVChuaCoTK());
 		}
 	}
 	
 	private void refresh() {
-		tableDSTK.setEnabled(true);
 		tfMaNhanVien.setText("");;
 		tfTenNhanVien.setText("");
 		tfChucVu.setText("");
 		tfMatKhau.setText("");
-		tfMatKhau.setEditable(false);
-		cbTrangThai.setEnabled(false);
 	}
 	
 	private void chonTaiKhoan() {

@@ -1,28 +1,12 @@
 package GUI;
 
 import javax.swing.JPanel;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javax.swing.SwingUtilities;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -31,67 +15,78 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.*;
 
-import java.time.LocalDateTime;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class ThongKeGUI extends JPanel {
-	JPanel panelDoanhThu = new JPanel(new BorderLayout());
-	JButton btnDoanhThuNgay;
-	JButton btnDoanhThuThang;
-	JButton btnDoanhThuNam;
+	
+	JPanel panelThongKe = new JPanel(new BorderLayout());
 	private static ArrayList<ArrayList<String>> danhSachDoanhThu = new ArrayList<ArrayList<String>>();
+	private static ArrayList<ArrayList<String>> danhSachChiTieu = new ArrayList<ArrayList<String>>();
+	private JLabel lblDoanhThu;
+	private JComboBox cbDoanhThu;
+	private JLabel lblChiTieu;
+	private JComboBox cbChiTieu;
 	
 	public ThongKeGUI() {
 		setSize(1082,689);
 		
-		btnDoanhThuNgay = new JButton("Doanh thu theo ngày");
-		btnDoanhThuNgay.setBounds(10, 14, 179, 21);
-		btnDoanhThuNgay.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showDoanhThuBanHang(e);
-			}
-		});
 		
-		
-		panelDoanhThu.setBounds(10, 45, 1016, 530);
-		add(panelDoanhThu);
+		panelThongKe.setBounds(10, 104, 1016, 575);
+		add(panelThongKe);
 		setLayout(null);
-		add(btnDoanhThuNgay);
 		
-		btnDoanhThuThang = new JButton("Doanh thu theo tháng");
-		btnDoanhThuThang.addActionListener(new ActionListener() {
+		lblDoanhThu = new JLabel("Thống kê doanh thu");
+		lblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDoanhThu.setBounds(10, 10, 140, 29);
+		add(lblDoanhThu);
+		
+		cbDoanhThu = new JComboBox();
+		cbDoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showDoanhThuBanHang(e);
+				showDoanhThuBanHang(cbDoanhThu.getSelectedIndex());
 			}
 		});
-		btnDoanhThuThang.setBounds(199, 14, 180, 21);
-		add(btnDoanhThuThang);
+		cbDoanhThu.setModel(new DefaultComboBoxModel(new String[] {"", "Ngày", "Tháng", "Năm"}));
+		cbDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cbDoanhThu.setBounds(160, 16, 134, 21);
+		add(cbDoanhThu);
 		
-		btnDoanhThuNam = new JButton("Doanh thu theo năm");
-		btnDoanhThuNam.addActionListener(new ActionListener() {
+		lblChiTieu = new JLabel("Thống kê chi tiêu");
+		lblChiTieu.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblChiTieu.setBounds(362, 10, 140, 29);
+		add(lblChiTieu);
+		
+		cbChiTieu = new JComboBox();
+		cbChiTieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showDoanhThuBanHang(e);
+				showChiTieu(cbChiTieu.getSelectedIndex());
 			}
 		});
-		btnDoanhThuNam.setBounds(389, 14, 180, 21);
-		add(btnDoanhThuNam);
+		cbChiTieu.setModel(new DefaultComboBoxModel(new String[] {"", "Ngày", "Tháng", "Năm"}));
+		cbChiTieu.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cbChiTieu.setBounds(512, 16, 134, 21);
+		add(cbChiTieu);
     }
 	
-	private void showDoanhThuBanHang(ActionEvent e) {
-		panelDoanhThu.removeAll();
+	private void showDoanhThuBanHang(int i) {
+		panelThongKe.removeAll();
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		JFreeChart chart = ChartFactory.createBarChart("DOANH SỐ BÁN HÀNG", "", "", dataset, PlotOrientation.VERTICAL, true, true, false);;
 		danhSachDoanhThu = BLL.ThongKeBLL.layDoanhThu();
 				
-		if(danhSachDoanhThu != null) {
+		if(danhSachDoanhThu !=null && i != -1) {
 			String temp="",d="";
 			double doanhThu = 0;
-			if(e.getSource() == btnDoanhThuNgay) {
+			if(i == 1) {
 				chart = ChartFactory.createBarChart("DOANH SỐ BÁN HÀNG THEO NGÀY", "Ngày", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
 				for(ArrayList<String> a : danhSachDoanhThu) {
 		        	doanhThu = Double.parseDouble(a.get(1).toString());
 		        	dataset.setValue(doanhThu, "Doanh thu theo ngày", a.get(0));
 				}
-			} else if(e.getSource() == btnDoanhThuThang) {
+			} else if(i == 2) {
 				temp="";
 				chart = ChartFactory.createBarChart("DOANH SỐ BÁN HÀNG THEO THÁNG", "Tháng", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
 				for(ArrayList<String> a : danhSachDoanhThu) {
@@ -106,7 +101,7 @@ public class ThongKeGUI extends JPanel {
 		        		}
 		        	}
 				dataset.setValue(doanhThu, "Doanh thu theo tháng", temp);
-				} else if(e.getSource() == btnDoanhThuNam) {
+				} else if(i == 3) {
 					temp="";
 					chart = ChartFactory.createBarChart("DOANH SỐ BÁN HÀNG THEO NĂM", "Năm", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
 					for(ArrayList<String> a : danhSachDoanhThu) {
@@ -122,13 +117,69 @@ public class ThongKeGUI extends JPanel {
 			        	}
 					dataset.setValue(doanhThu, "Doanh thu theo năm", temp);
 				}
+			CategoryPlot catPlot = chart.getCategoryPlot();
+			catPlot.setRangeGridlinePaint(Color.blue);
+			
+			ChartPanel chartPanel = new ChartPanel(chart);
+			panelThongKe.add(chartPanel,BorderLayout.CENTER);
+			panelThongKe.setEnabled(false);
+			panelThongKe.validate();
 		}
-		CategoryPlot catPlot = chart.getCategoryPlot();
-		catPlot.setRangeGridlinePaint(Color.blue);
-		
-		ChartPanel chartPanel = new ChartPanel(chart);
-		panelDoanhThu.add(chartPanel,BorderLayout.CENTER);
-		panelDoanhThu.setEnabled(false);
-		panelDoanhThu.validate();
+	}
+	
+	private void showChiTieu(int i) {
+		panelThongKe.removeAll();
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		JFreeChart chart = ChartFactory.createBarChart("CHI TIÊU MUA HÀNG", "", "", dataset, PlotOrientation.VERTICAL, true, true, false);;
+		danhSachChiTieu = BLL.ThongKeBLL.layChiTieu();
+				
+		if(danhSachChiTieu != null  && i != -1) {
+			String temp="",d="";
+			double chiTieu = 0;
+			if(i == 1) {
+				chart = ChartFactory.createBarChart("CHI TIÊU MUA HÀNG THEO NGÀY", "Ngày", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
+				for(ArrayList<String> a : danhSachChiTieu) {
+					chiTieu = Double.parseDouble(a.get(1).toString());
+		        	dataset.setValue(chiTieu, "Chi tiêu theo ngày", a.get(0));
+				}
+			} else if(i == 2) {
+				temp="";
+				chart = ChartFactory.createBarChart("CHI TIÊU MUA HÀNG THEO THÁNG", "Tháng", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
+				for(ArrayList<String> a : danhSachChiTieu) {
+		        	String[] date = a.get(0).toString().split("-");
+		        	d = date[1]+"-"+date[0];
+		        	if(temp.equals("")) temp = date[1]+"-"+date[0]; 
+		        	if (temp.equals(d)) chiTieu += Double.parseDouble(a.get(1).toString());
+		        	else {
+		        		dataset.setValue(chiTieu, "Doanh thu theo tháng", temp);
+		        		chiTieu = Double.parseDouble(a.get(1).toString());
+		        		temp = d;
+		        		}
+		        	}
+				dataset.setValue(chiTieu, "Chi tiêu theo tháng", temp);
+				} else if(i == 3) {
+					temp="";
+					chart = ChartFactory.createBarChart("CHI TIÊU MUA HÀNG THEO NĂM", "Năm", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
+					for(ArrayList<String> a : danhSachChiTieu) {
+						String[] date = a.get(0).toString().split("-");
+			        	d = date[0];
+			        	if(temp.equals("")) temp = date[0]; 
+			        	if (temp.equals(d)) chiTieu += Double.parseDouble(a.get(1).toString());
+			        	else {
+			        		dataset.setValue(chiTieu, "Chi tiêu theo năm", temp);
+			        		chiTieu = Double.parseDouble(a.get(1).toString());
+			        		temp = d;
+			        		}
+			        	}
+					dataset.setValue(chiTieu, "Chi tiêu theo năm", temp);
+				}
+			CategoryPlot catPlot = chart.getCategoryPlot();
+			catPlot.setRangeGridlinePaint(Color.blue);
+			
+			ChartPanel chartPanel = new ChartPanel(chart);
+			panelThongKe.add(chartPanel,BorderLayout.CENTER);
+			panelThongKe.setEnabled(false);
+			panelThongKe.validate();
+		}
 	}
 }

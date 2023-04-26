@@ -28,8 +28,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class HoaDonGUI extends JPanel {
 	
@@ -206,16 +204,6 @@ public class HoaDonGUI extends JPanel {
 		btnXemChiTiet.setBounds(459, 254, 132, 33);
 		panelDanhSachHD.add(btnXemChiTiet);
 		
-		JButton btnLapHoaDon = new JButton("Lập hóa đơn");
-		btnLapHoaDon.setBounds(848, 246, 95, 19);
-		add(btnLapHoaDon);
-		btnLapHoaDon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lapHoaDon();
-			}
-		});
-		btnLapHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		
 		JPanel panelDSSP = new JPanel();
 		panelDSSP.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EA3n ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDSSP.setBounds(454, 53, 328, 246);
@@ -250,6 +238,37 @@ public class HoaDonGUI extends JPanel {
 		tfSoLuong.setBounds(76, 217, 52, 19);
 		panelDSSP.add(tfSoLuong);
 		tfSoLuong.setColumns(10);
+		
+		JPanel panelChucNang = new JPanel();
+		panelChucNang.setBorder(new TitledBorder(null, "Ch\u1EE9c n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelChucNang.setBounds(658, 317, 322, 38);
+		add(panelChucNang);
+		panelChucNang.setLayout(null);
+		
+		JButton btnCapNhatHD = new JButton("Cập nhật hóa đơn");
+		btnCapNhatHD.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnCapNhatHD.setBounds(115, 10, 95, 19);
+		panelChucNang.add(btnCapNhatHD);
+		
+		JButton btnLapHoaDon = new JButton("Lập hóa đơn");
+		btnLapHoaDon.setBounds(10, 10, 95, 19);
+		panelChucNang.add(btnLapHoaDon);
+		btnLapHoaDon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lapHoaDon();
+			}
+		});
+		btnLapHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		
+		JButton btnXoaHD = new JButton("Xóa hóa đơn");
+		btnXoaHD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				xoaHoaDon();
+			}
+		});
+		btnXoaHD.setBounds(220, 10, 95, 19);
+		panelChucNang.add(btnXoaHD);
+		btnXoaHD.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
 		hienThiDSHD(BLL.HoaDonBLL.layDanhSachHD());
 		hienThiDSSP(BLL.SanPhamBLL.layDanhSachSP());
@@ -414,10 +433,24 @@ public class HoaDonGUI extends JPanel {
 			HoaDon hoaDon = new HoaDon("",khachHang,nhanVien,dsct,ngayLap,tongTien, false);
 			int c = JOptionPane.showConfirmDialog(null, "Xác nhận lập hóa đơn ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
 			if(c == 0 && BLL.HoaDonBLL.lapHoaDon(hoaDon)) {
-				JOptionPane.showMessageDialog(null, "Lap hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Lập hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 				hienThiDSHD(BLL.HoaDonBLL.layDanhSachHD());
 			}
 			else JOptionPane.showMessageDialog(null, "Lập hóa đơn không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	private void xoaHoaDon() {
+		int i = tableDSHD.getSelectedRow();
+		if (i >= 0) {
+			HoaDon hoaDon = new HoaDon();
+			hoaDon.setMaPhieu(danhSachHD.get(i).getMaPhieu());
+			int c = JOptionPane.showConfirmDialog(null, "Xác nhận xóa hóa đơn ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+			if(c == 0 && BLL.HoaDonBLL.xoaHoaDon(hoaDon)) {
+				JOptionPane.showMessageDialog(null, "Xóa hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				hienThiDSHD(BLL.HoaDonBLL.layDanhSachHD());
+			}
+			else JOptionPane.showMessageDialog(null, "Xóa hóa đơn không thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	

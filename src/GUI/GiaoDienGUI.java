@@ -13,6 +13,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 public class GiaoDienGUI extends JFrame {
@@ -27,18 +31,18 @@ public class GiaoDienGUI extends JFrame {
 		setTitle("Giao diện quản lý");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1400, 740);
+		setBounds(100, 100, 1276, 740);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 240, 240));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panelDanhMuc = new JPanel();
-		panelDanhMuc.setBorder(new TitledBorder(null, "DANH M\u1EE4C", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panelDanhMuc.setBounds(10, 10, 167, 585);
+		panelDanhMuc.setBorder(null);
+		panelDanhMuc.setBounds(0, 83, 186, 618);
 		contentPane.add(panelDanhMuc);
-		panelDanhMuc.setLayout(null);
 		
 		JPanel panelGiaoDien = new JPanel();
 		panelGiaoDien.setSize(new Dimension(1082,689));
@@ -60,85 +64,114 @@ public class GiaoDienGUI extends JFrame {
 		panelGiaoDien.add(new ThongKeGUI(), "ThongKe");
 		
 		JButton btnSanPham = new JButton("SẢN PHẨM");
+		btnSanPham.setBorder(null);
+		btnSanPham.setBackground(new Color(0, 153, 255));
+		btnSanPham.setForeground(new Color(255, 255, 255));
+		btnSanPham.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSanPham.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnSanPham.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				cl.show(panelGiaoDien, "SanPham");
 			}
 		});
-		btnSanPham.setBounds(10, 23, 147, 43);
 		btnSanPham.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JButton btnNhanVien = new JButton("NHÂN VIÊN");
+		btnNhanVien.setBorder(null);
+		btnNhanVien.setBackground(new Color(0, 153, 255));
+		btnNhanVien.setForeground(new Color(255, 255, 255));
+		btnNhanVien.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "NhanVien");
 			}
 		});
-		btnNhanVien.setBounds(10, 76, 147, 43);
 		btnNhanVien.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JButton btnKhachHang = new JButton("KHÁCH HÀNG");
+		btnKhachHang.setBorder(null);
+		btnKhachHang.setBackground(new Color(0, 153, 255));
+		btnKhachHang.setForeground(new Color(255, 255, 255));
+		btnKhachHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnKhachHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "KhachHang");
 			}
 		});
 		btnKhachHang.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnKhachHang.setBounds(10, 129, 147, 43);
 		
 		JButton btnNhaCC = new JButton("NHÀ CUNG CẤP");
+		btnNhaCC.setBorder(null);
+		btnNhaCC.setBackground(new Color(0, 153, 255));
+		btnNhaCC.setForeground(new Color(255, 255, 255));
+		btnNhaCC.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNhaCC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "NhaCungCap");
 			}
 		});
 		btnNhaCC.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNhaCC.setBounds(10, 182, 147, 43);
 		
 		JButton btnHoaDon = new JButton("HÓA ĐƠN");
+		btnHoaDon.setBorder(null);
+		btnHoaDon.setBackground(new Color(0, 153, 255));
+		btnHoaDon.setForeground(new Color(255, 255, 255));
+		btnHoaDon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "HoaDon");
 			}
 		});
 		btnHoaDon.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnHoaDon.setBounds(10, 238, 147, 43);
 		
 		JButton btnNhapHang = new JButton("NHẬP HÀNG");
+		btnNhapHang.setBorder(null);
+		btnNhapHang.setBackground(new Color(0, 153, 255));
+		btnNhapHang.setForeground(new Color(255, 255, 255));
+		btnNhapHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNhapHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "PhieuNhap");
 			}
 		});
 		btnNhapHang.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNhapHang.setBounds(10, 296, 147, 43);
 		
 		JButton btnXuatHang = new JButton("XUẤT HÀNG");
+		btnXuatHang.setBorder(null);
+		btnXuatHang.setBackground(new Color(0, 153, 255));
+		btnXuatHang.setForeground(new Color(255, 255, 255));
+		btnXuatHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXuatHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "PhieuXuat");
 			}
 		});
 		btnXuatHang.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnXuatHang.setBounds(10, 353, 147, 43);
 		
 		JButton btnTaiKhoan = new JButton("TÀI KHOẢN");
+		btnTaiKhoan.setBorder(null);
+		btnTaiKhoan.setBackground(new Color(0, 153, 255));
+		btnTaiKhoan.setForeground(new Color(255, 255, 255));
+		btnTaiKhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTaiKhoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "TaiKhoan");
 			}
 		});
 		btnTaiKhoan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnTaiKhoan.setBounds(10, 412, 147, 43);
 		
 		JButton btnThongKe = new JButton("THỐNG KÊ");
+		btnThongKe.setBorder(null);
+		btnThongKe.setBackground(new Color(0, 153, 255));
+		btnThongKe.setForeground(new Color(255, 255, 255));
+		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThongKe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(panelGiaoDien, "ThongKe");
 			}
 		});
 		btnThongKe.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnThongKe.setBounds(10, 472, 147, 43);
+		panelDanhMuc.setLayout(new GridLayout(0, 1, 0, 0));
 		
 //		if("BANHANG".equals(taiKhoan.getChucVu().getMaChucVu())) {
 //			panelDanhMuc.add(btnKhachHang);

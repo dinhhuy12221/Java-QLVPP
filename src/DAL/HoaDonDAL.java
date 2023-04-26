@@ -109,7 +109,7 @@ public class HoaDonDAL extends DatabaseAccess{
     	ArrayList<HoaDon> danhSachHoaDon = new ArrayList<HoaDon>();
     	try {
     		getConnection();
-    		String s1 = "SELECT * FROM HOA_DON";
+    		String s1 = "SELECT * FROM HOA_DON WHERE TINH_TRANG = 'True'";
     		statement = conn.createStatement();
     		resultSet = statement.executeQuery(s1);
     		while(resultSet.next()) {

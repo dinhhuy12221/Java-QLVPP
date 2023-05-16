@@ -39,6 +39,9 @@ public class NhaCungCapBLL {
     public static ArrayList<NhaCungCap> timtheomancc(String mancc, String tenncc) {
     	return NhaCungCapDAL.timtheomancc(mancc,tenncc);
     }
+    public static String taoMaNhaCC() {
+    	return DAL.NhaCungCapDAL.taoMaNhaCC();
+    }
 }
 /*ArrayList<SanPham> danhSachSanPham = new ArrayList<SanPham>();
         danhSachSanPham = DAL.SanPhamDAL.layDanhSachSanPham();

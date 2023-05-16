@@ -17,14 +17,16 @@ public class SanPhamBLL {
         return DAL.SanPhamDAL.suaSanPham(sanPham);
     }
     
-    public static int laySoLuongSanPham() {
-    	return DAL.SanPhamDAL.laySoLuongSanPham();
+//    public static int laySoLuongSanPham() {
+//    	return DAL.SanPhamDAL.laySoLuongSanPham();
+//    }
+    
+    public static String taoMaSanPham() {
+    	return DAL.SanPhamDAL.taoMaSanPham();
     }
 
     public static ArrayList<SanPham> layDanhSachSP(){
-        ArrayList<SanPham> danhSachSanPham = new ArrayList<SanPham>();
-        danhSachSanPham = DAL.SanPhamDAL.layDanhSachSanPham();
-        return danhSachSanPham;
+        return DAL.SanPhamDAL.layDanhSachSanPham();
     }
     
 }

@@ -4,37 +4,40 @@ public class SanPham {
     private String maSanPham;
     private String tenSanPham;
     private String chatLieu;
+    private String donVi;
     private LoaiSanPham loaiSanPham;
     private NhaCungCap nhaCC;
     private double giaNhap;
     private double giaBan;
     private int soLuong;
-    private byte[] anhSanPham;
+//    private byte[] anhSanPham;
     private String filePath;
 
     public SanPham(){
         this.maSanPham = "";
         this.tenSanPham = "";
         this.chatLieu = "";
-        this.loaiSanPham = null;
-        this.nhaCC = null;
+        this.donVi = "";
+        this.loaiSanPham = new LoaiSanPham();
+        this.nhaCC = new NhaCungCap();
         this.giaNhap = 0;
         this.giaBan = 0;
         this.soLuong = 0;
-        this.anhSanPham = null;
+//        this.anhSanPham = null;
         this.filePath = "";
     }
 
-    public SanPham(String maSanPham, String tenSanPham, String chatLieu, LoaiSanPham loaiSanPham, NhaCungCap nhaCC, double giaNhap, double giaBan, int soLuong, byte[] anhSanPham, String filePath){
+    public SanPham(String maSanPham, String tenSanPham, String chatLieu, String donVi,LoaiSanPham loaiSanPham, NhaCungCap nhaCC, double giaNhap, double giaBan, int soLuong, String filePath){
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.chatLieu = chatLieu;
+        this.donVi = donVi;
         this.loaiSanPham = loaiSanPham;
         this.nhaCC = nhaCC;
         this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.soLuong = soLuong;
-        this.anhSanPham = anhSanPham;
+//        this.anhSanPham = anhSanPham;
         this.filePath = filePath;
     }
 
@@ -60,6 +63,14 @@ public class SanPham {
 
     public String getChatLieu(){
         return this.chatLieu;
+    }
+    
+    public void setDonVi(String donVi) {
+    	this.donVi = donVi;
+    }
+    
+    public String getDonVi() {
+    	return this.donVi;
     }
 
     public void setLoaiSanPham(LoaiSanPham loaiSanPham){
@@ -102,13 +113,13 @@ public class SanPham {
         return this.soLuong;
     }
     
-    public void setAnhSanPham(byte[] anhSanPham) {
-    	this.anhSanPham = anhSanPham;
-    }
-    
-    public byte[] getAnhSanPham() {
-    	return this.anhSanPham;
-    }
+//    public void setAnhSanPham(byte[] anhSanPham) {
+//    	this.anhSanPham = anhSanPham;
+//    }
+//    
+//    public byte[] getAnhSanPham() {
+//    	return this.anhSanPham;
+//    }
     
     public void setFilePath(String filePath) {
     	this.filePath = filePath;

@@ -1,6 +1,7 @@
 package DTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Phieu {
     private String maPhieu;
@@ -11,8 +12,8 @@ public class Phieu {
 
     public Phieu(){
         this.maPhieu = "";
-        this.nhanVien = null;
-        this.dsct = null;
+        this.nhanVien = new NhanVien();
+        this.dsct = new ArrayList<ChiTietPhieu>();
         this.ngayLap = "";
         this.tongTien = 0;
     }

@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTabbedPane;
 
 public class ThongKeGUI extends JPanel {
 	
@@ -31,32 +32,12 @@ public class ThongKeGUI extends JPanel {
 	private JComboBox cbChiTieu;
 	
 	public ThongKeGUI() {
-		setSize(1082,689);
-		
-		
-		panelThongKe.setBounds(10, 104, 1016, 575);
-		add(panelThongKe);
+		setSize(1269,679);
 		setLayout(null);
-		
-		lblDoanhThu = new JLabel("Thống kê doanh thu");
-		lblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDoanhThu.setBounds(10, 10, 140, 29);
-		add(lblDoanhThu);
-		
-		cbDoanhThu = new JComboBox();
-		cbDoanhThu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showDoanhThuBanHang(cbDoanhThu.getSelectedIndex());
-			}
-		});
-		cbDoanhThu.setModel(new DefaultComboBoxModel(new String[] {"", "Ngày", "Tháng", "Năm"}));
-		cbDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		cbDoanhThu.setBounds(160, 16, 134, 21);
-		add(cbDoanhThu);
 		
 		lblChiTieu = new JLabel("Thống kê chi tiêu");
 		lblChiTieu.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblChiTieu.setBounds(362, 10, 140, 29);
+		lblChiTieu.setBounds(362, 29, 140, 29);
 		add(lblChiTieu);
 		
 		cbChiTieu = new JComboBox();
@@ -67,8 +48,29 @@ public class ThongKeGUI extends JPanel {
 		});
 		cbChiTieu.setModel(new DefaultComboBoxModel(new String[] {"", "Ngày", "Tháng", "Năm"}));
 		cbChiTieu.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		cbChiTieu.setBounds(512, 16, 134, 21);
+		cbChiTieu.setBounds(512, 35, 134, 21);
 		add(cbChiTieu);
+		
+		lblDoanhThu = new JLabel("Thống kê doanh thu");
+		lblDoanhThu.setBounds(10, 29, 140, 29);
+		add(lblDoanhThu);
+		lblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		cbDoanhThu = new JComboBox();
+		cbDoanhThu.setBounds(160, 34, 134, 21);
+		add(cbDoanhThu);
+		cbDoanhThu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showDoanhThuBanHang(cbDoanhThu.getSelectedIndex());
+			}
+		});
+		cbDoanhThu.setModel(new DefaultComboBoxModel(new String[] {"", "Ngày", "Tháng", "Năm"}));
+		cbDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panelThongKe.setBounds(10, 86, 1249, 582);
+		add(panelThongKe);
+		
+//		tabbedPane.addTab("Doanh thu", null, panelThongKe, null);
+
     }
 	
 	private void showDoanhThuBanHang(int i) {
@@ -82,9 +84,13 @@ public class ThongKeGUI extends JPanel {
 			double doanhThu = 0;
 			if(i == 1) {
 				chart = ChartFactory.createBarChart("DOANH SỐ BÁN HÀNG THEO NGÀY", "Ngày", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
+				int count = 0;
 				for(ArrayList<String> a : danhSachDoanhThu) {
-		        	doanhThu = Double.parseDouble(a.get(1).toString());
-		        	dataset.setValue(doanhThu, "Doanh thu theo ngày", a.get(0));
+					if(count < 7) {
+			        	doanhThu = Double.parseDouble(a.get(1).toString());
+			        	dataset.setValue(doanhThu, "Doanh thu theo ngày", a.get(0));
+						count ++;
+					}
 				}
 			} else if(i == 2) {
 				temp="";
@@ -138,9 +144,13 @@ public class ThongKeGUI extends JPanel {
 			double chiTieu = 0;
 			if(i == 1) {
 				chart = ChartFactory.createBarChart("CHI TIÊU MUA HÀNG THEO NGÀY", "Ngày", "VND", dataset, PlotOrientation.VERTICAL, true, true, false);
+				int count = 0;
 				for(ArrayList<String> a : danhSachChiTieu) {
-					chiTieu = Double.parseDouble(a.get(1).toString());
-		        	dataset.setValue(chiTieu, "Chi tiêu theo ngày", a.get(0));
+					if(count < 7) {
+						chiTieu = Double.parseDouble(a.get(1).toString());
+			        	dataset.setValue(chiTieu, "Chi tiêu theo ngày", a.get(0));
+			        	count ++;
+					}
 				}
 			} else if(i == 2) {
 				temp="";

@@ -5,7 +5,7 @@ public class ChiTietPhieu {
     private double thanhTien;
 
     public ChiTietPhieu(){
-        this.sanPham = null;
+        this.sanPham = new SanPham();
         this.thanhTien = 0;
     }
 

@@ -3,21 +3,20 @@ package DTO;
 public class NhanVien extends ConNguoi{
     private ChucVu chucVu;
     private double luong;
-    private byte[] anhNhanVien;
-    private String anhFilePath;
+    private String anhNhanVien;
 
     public NhanVien(){
         super();
-        this.chucVu = null;
+        this.chucVu = new ChucVu();
         this.luong = 0;
     }
 
-    public NhanVien(String maNhanVien, String hoTen,String diaChi, String soDienThoai,String ngaySinh, ChucVu chucVu,Double luong, byte[] anhNhanVien, String anhFilePath){
+    public NhanVien(String maNhanVien, String hoTen,String diaChi, String soDienThoai,String ngaySinh, ChucVu chucVu,Double luong, String anhNhanVien){
         super(maNhanVien, hoTen, diaChi, soDienThoai, ngaySinh);
         this.chucVu = chucVu;
         this.luong = luong;
         this.anhNhanVien = anhNhanVien;
-        this.anhFilePath = anhFilePath;
+        this.anhNhanVien = anhNhanVien;
     }
 
     public void setChucVu(ChucVu chucVu){
@@ -36,19 +35,12 @@ public class NhanVien extends ConNguoi{
         return this.luong;
     }
     
-    public void setAnhNhanVien(byte[] anhNhanVien) {
+    
+    public void setAnhFilePath(String anhNhanVien) {
     	this.anhNhanVien = anhNhanVien;
     }
     
-    public byte[] getAnhNhanVien() {
-    	return this.anhNhanVien;
-    }
-    
-    public void setAnhFilePath(String anhFilePath) {
-    	this.anhFilePath = anhFilePath;
-    }
-    
     public String getAnhFilePath() {
-    	return this.anhFilePath;
+    	return this.anhNhanVien;
     }
 }

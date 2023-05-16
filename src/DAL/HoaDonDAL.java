@@ -1,6 +1,10 @@
 package DAL;
 
+import java.util.Date;
 import java.util.ArrayList;
+import java.text.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import DTO.ChiTietPhieu;
 import DTO.HoaDon;
@@ -9,18 +13,34 @@ import DTO.NhanVien;
 import DTO.SanPham;
 
 public class HoaDonDAL extends DatabaseAccess{
-    public static boolean themHoaDon(HoaDon hoaDon) {
+	public static String taoMaHoaDon() {
+		String maHoaDon = "";
+		try {
+			getConnection();
+			String s = "TAO_MA_HOA_DON";
+			statement = conn.createStatement();
+			resultSet = statement.executeQuery(s);
+			while(resultSet.next()) {
+				maHoaDon = resultSet.getString(1);
+				return maHoaDon;
+			}
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		return maHoaDon;
+	}
+    public static boolean lapHoaDon(HoaDon hoaDon) {
     	try {
-    		hoaDon.setMaPhieu(taoMaHoaDon());
     		getConnection();
-    		String s = "INSERT INTO HOA_DON VALUES(?,?,?,?,?,?,'True')";
+    		String s = "INSERT INTO HOA_DON VALUES(?,?,?,?,?)";
     		ps = conn.prepareStatement(s);
     		ps.setString(1, hoaDon.getMaPhieu());
     		ps.setString(2, hoaDon.getKhachHang().getMa());
     		ps.setString(3, hoaDon.getNhanVien().getMa());
+//    		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"); 
+//    		Date startDate = (Date) df.parse(hoaDon.getNgayLap());
     		ps.setString(4, hoaDon.getNgayLap());
     		ps.setDouble(5, hoaDon.getTongTien());
-    		ps.setBoolean(6, false);
     		int i = ps.executeUpdate();
     		
     		for(ChiTietPhieu ctp: hoaDon.getDSCT()) {
@@ -34,82 +54,76 @@ public class HoaDonDAL extends DatabaseAccess{
 	    		ps.executeUpdate();
     		}
     		System.out.println("Cap nhat chi tiet thanh cong");
-    		
+    		closeConnection();
     		if (i > 0) {
-    			closeConnection();
-    			if (KhachHangDAL.capNhatChiTieu(hoaDon.getKhachHang().getMa(), hoaDon.getTongTien())) System.out.println("Cap nhat tong chi tieu thanh cong");
     			for (ChiTietPhieu ctp : hoaDon.getDSCT()) {
-    				if (SanPhamDAL.capNhatSoLuongSP(ctp.getSanPham().getMaSanPham(), ctp.getSanPham().getSoLuong())) System.out.println("Cap nhat so luong thanh cong");
+    				if (SanPhamDAL.capNhatSoLuongSP(ctp.getSanPham().getMaSanPham(), ctp.getSanPham().getSoLuong())) {
+    					System.out.println("Cap nhat so luong thanh cong");
+    				} 
     			}
     			return true;
     		}
-    		else {
-    			closeConnection();
-    			return false;
-    		}
     	}
     	catch(Exception ex) {
     		System.out.println(ex.getMessage());
-    	}
-    	finally {
-    		closeConnection();
     	}
     	return false;
     }
     
-    public static boolean xoaHoaDon(HoaDon hoaDon) {
-    	try {
-    		getConnection();
-    		String s = "UPDATE HOA_DON SET TINH_TRANG = 'False' WHERE MA_HD = '" + hoaDon.getMaPhieu() + "'";
-    		statement = conn.createStatement();
-    		int i = statement.executeUpdate(s);
-    		if (i > 0) {
-    			closeConnection();
-    			return true;
-    		}
-    		else {
-    			closeConnection();
-    			return false;
-    		}
-    	}
-    	catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    	}
-    	finally {
-    		closeConnection();
-    	}
-    	return false;
-    }
-    
-    public static boolean suaHoaDon(HoaDon hoaDon) {
-    	try {
-    		getConnection();
-    		String s = "UPDATE HOA_DON SET TRANG_THAI = '" + hoaDon.getTrangThai() + "' WHERE MA_HD = '" + hoaDon.getMaPhieu() + "'";
-    		statement = conn.createStatement();
-    		int i = statement.executeUpdate(s);
-    		if (i > 0) {
-    			closeConnection();
-    			return true;
-    		}
-    		else {
-    			closeConnection();
-    			return false;
-    		}
-    	}
-    	catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    	}
-    	finally {
-    		closeConnection();
-    	}
-    	return false;
-    }
+//    public static boolean xoaHoaDon(HoaDon hoaDon) {
+//    	try {
+//    		getConnection();
+//    		String s = "UPDATE HOA_DON SET TINH_TRANG = 'False' WHERE MA_HD = '" + hoaDon.getMaPhieu() + "'";
+//    		statement = conn.createStatement();
+//    		int i = statement.executeUpdate(s);
+//    		if (i > 0) {
+//    			closeConnection();
+//    			return true;
+//    		}
+//    		else {
+//    			closeConnection();
+//    			return false;
+//    		}
+//    	}
+//    	catch(Exception ex) {
+//    		System.out.println(ex.getMessage());
+//    	}
+//    	finally {
+//    		closeConnection();
+//    	}
+//    	return false;
+//    }
+//    
+//    public static boolean suaHoaDon(HoaDon hoaDon) {
+//    	try {
+//    		getConnection();
+//    		String s = "UPDATE HOA_DON SET TRANG_THAI = '" + hoaDon.getTrangThai() + "' WHERE MA_HD = '" + hoaDon.getMaPhieu() + "'";
+//    		statement = conn.createStatement();
+//    		int i = statement.executeUpdate(s);
+//    		if (i > 0) {
+//    			closeConnection();
+//    			return true;
+//    		}
+//    		else {
+//    			closeConnection();
+//    			return false;
+//    		}
+//    	}
+//    	catch(Exception ex) {
+//    		System.out.println(ex.getMessage());
+//    	}
+//    	finally {
+//    		closeConnection();
+//    	}
+//    	return false;
+//    }
     
     public static ArrayList<HoaDon> layDanhSachHoaDon(){
     	ArrayList<HoaDon> danhSachHoaDon = new ArrayList<HoaDon>();
     	try {
     		getConnection();
-    		String s1 = "SELECT * FROM HOA_DON WHERE TINH_TRANG = 'True'";
+    		String s1 = "SELECT MA_HD,MA_KH, MA_NV, FORMAT([NGAY_LAP], 'dd-MM-yyyy HH:mm') NGAY, TONG_TIEN"
+    				+ " FROM HOA_DON";
     		statement = conn.createStatement();
     		resultSet = statement.executeQuery(s1);
     		while(resultSet.next()) {
@@ -118,7 +132,6 @@ public class HoaDonDAL extends DatabaseAccess{
     			String maNV = resultSet.getString(3);
     			String ngayLap = resultSet.getString(4);
     			double tongTien = resultSet.getDouble(5);
-    			boolean trangThai = resultSet.getBoolean(6);
     			
     			String s2 = "SELECT SP.MA_SP, SP.TEN_SP, CTHD.DON_GIA, CTHD.SO_LUONG, CTHD.THANH_TIEN FROM CT_HOA_DON CTHD, SAN_PHAM SP WHERE CTHD.MA_HD = '" + maHD + "' AND CTHD.MA_SP = SP.MA_SP";
     			statement = conn.createStatement();
@@ -130,7 +143,6 @@ public class HoaDonDAL extends DatabaseAccess{
         			double donGia = resultSet1.getDouble(3);
         			int soLuong = resultSet1.getInt(4);
         			double thanhTien = resultSet1.getDouble(5);
-        			
         			SanPham sanPham = new SanPham();
         			sanPham.setMaSanPham(maSP);
         			sanPham.setTenSanPham(tenSP);
@@ -152,7 +164,7 @@ public class HoaDonDAL extends DatabaseAccess{
         		khachHang.setMa(maKH);khachHang.setHoTen(tenKH);
         		NhanVien nhanVien = new NhanVien();
         		nhanVien.setMa(maNV);nhanVien.setHoTen(tenNV);
-    			HoaDon hoaDon = new HoaDon(maHD, khachHang, nhanVien, dsct, ngayLap, tongTien, trangThai);
+    			HoaDon hoaDon = new HoaDon(maHD, khachHang, nhanVien, dsct, ngayLap,tongTien);
     			danhSachHoaDon.add(hoaDon);
     		}
     		return danhSachHoaDon;
@@ -163,26 +175,9 @@ public class HoaDonDAL extends DatabaseAccess{
     	finally {
     		closeConnection();
     	}
-    	return null;
+    	return danhSachHoaDon;
     }
     
-    private static String taoMaHoaDon() {
-    	int i = 0;
-		try {
-			getConnection();
-			String s = "SELECT COUNT(MA_HD) FROM HOA_DON";
-			statement = conn.createStatement();
-			resultSet = statement.executeQuery(s);
-			while(resultSet.next()) {
-				i = resultSet.getInt(1);
-			}
-		}
-		catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		closeConnection();
-		return "HD" + (i+1);
-    }
     
     
     

@@ -11,9 +11,9 @@ public class NhanVienBLL {
         danhSachNhanVien = DAL.NhanVienDAL.layDanhSachNhanVien();
         return danhSachNhanVien;
     }
-    public static int laySoLuongNhanVien() {
-    	return DAL.NhanVienDAL.laySoLuongNhanVien();
-    }
+//    public static int laySoLuongNhanVien() {
+//    	return DAL.NhanVienDAL.laySoLuongNhanVien();
+//    }
     public static boolean themNhanVien(NhanVien nhanvien){
         return DAL.NhanVienDAL.themNhanVien(nhanvien);
     }

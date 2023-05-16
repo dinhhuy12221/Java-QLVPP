@@ -34,13 +34,30 @@ import DTO.SanPham;
 //DAL CÓ KẾT NỐI CSDL VÀ CÁC HÀM THAO TÁC VỚI CSDL
 public class NhaCungCapDAL extends DatabaseAccess{
 	
+	public static String taoMaNhaCC() {
+		String maNhaCC = "";
+		try {
+			getConnection();
+			String s = "TAO_MA_NCC";
+			statement = conn.createStatement();
+			resultSet = statement.executeQuery(s);
+			while(resultSet.next()) {
+				maNhaCC = resultSet.getString(1);
+				return maNhaCC;
+			}
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		return maNhaCC;
+	}
+	
 	//HÀM LẤY DANH SÁCH CÁC NHÀ CC TỪ CSDL
 	public static ArrayList<NhaCungCap> layDanhSachNhaCC(){
 		//Array list cũng là mảng động giống vector
 		ArrayList<NhaCungCap> danhSachNCC = new ArrayList<NhaCungCap>();
 		try {
 			getConnection();//cài kết nối cơ sở dữ liệu, bên databaseAccess
-			String s = "SELECT * FROM NHA_CUNG_CAP";	//
+			String s = "SELECT * FROM NHA_CUNG_CAP WHERE TINH_TRANG = 'True'";	//
 			statement = conn.createStatement();//khỏi gọi biến
 			resultSet = statement.executeQuery(s);
 			while(resultSet.next()) {
@@ -103,9 +120,9 @@ public class NhaCungCapDAL extends DatabaseAccess{
 		boolean rs = false;
 		try {
 			getConnection();
-			String sql = "insert into nha_cung_cap values(?,?,?,?)";
+			String sql = "insert into nha_cung_cap values(?,?,?,?,'True')";
 			ps = conn.prepareStatement(sql);//ps là prepared statement, TRIM XÓA HẾT KHOẢNG TRẮNG	
-			ps.setString(1, ncc.getMaNhaCC().trim());
+			ps.setString(1, ncc.getMaNhaCC());
 			ps.setString(2, ncc.getTenNhaCC().trim());
 			ps.setString(3, ncc.getDiaChi().trim());
 			ps.setString(4, ncc.getSoDienThoai().trim());
@@ -126,7 +143,7 @@ public class NhaCungCapDAL extends DatabaseAccess{
 		try {
 			getConnection();
 			Statement stmt = conn.createStatement();
-			String sql = "delete from nha_cung_cap where ma_ncc='"+mancc+"'";
+			String sql = "update nha_cung_cap set tinh_trang = 'False' where ma_ncc='"+mancc+"'";
 			dem = stmt.executeUpdate(sql);
 		} catch(Exception e) {
 			System.out.println(e);

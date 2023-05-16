@@ -39,16 +39,9 @@ public class NhaCungCapGUI extends JPanel {
 	 * Create the panel.
 	 */
 	public NhaCungCapGUI() {
-		setSize(1082,689);
-		setLayout(null);//LÀ LAYOUT ABSOLUTE
-		
-				//TẠO TIÊU ĐỀ
-		JLabel LabelTieuDe = new JLabel("NHÀ CUNG CẤP");
-		LabelTieuDe.setForeground(Color.BLUE);
-		LabelTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
-		LabelTieuDe.setFont(new Font("Tahoma", Font.BOLD, 20));
-		LabelTieuDe.setBounds(268, 15, 325, 36);
-		add(LabelTieuDe);
+		setBackground(new Color(240, 240, 240));
+		setSize(1269,679);
+		setLayout(null);
 		
 				//TẠO KHUNG THÔNG TIN NHÀ CUNG CẤP
 		JPanel panelttNCC = new JPanel();
@@ -66,7 +59,7 @@ public class NhaCungCapGUI extends JPanel {
 		
 		JLabel LabelMaNCC = new JLabel("Mã nhà cung cấp:");
 		LabelMaNCC.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		LabelMaNCC.setBounds(10, 27, 95, 13);
+		LabelMaNCC.setBounds(10, 27, 108, 13);
 		panelttNCC.add(LabelMaNCC);
 		
 		//TEXTFIELD VÀ LABEL CỦA TÊN NHÀ CC
@@ -118,9 +111,10 @@ public class NhaCungCapGUI extends JPanel {
 		
 		//NÚT XÁC NHẬN TRONG KHUNG THÔNG TIN NHÀ CC ĐỂ TẠO NHÀ CC MỚI/SỬA
 		ButtonXacnhan1 = new JButton("Xác nhận");
+		ButtonXacnhan1.setIcon(new ImageIcon("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\icon\\check-mark.png"));
 		ButtonXacnhan1.setEnabled(false);
 		ButtonXacnhan1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonXacnhan1.setBounds(320, 189, 157, 48);
+		ButtonXacnhan1.setBounds(309, 188, 157, 48);
 		panelttNCC.add(ButtonXacnhan1);
 		ButtonXacnhan1.addActionListener(new ActionListener() {
 			@Override
@@ -138,6 +132,7 @@ public class NhaCungCapGUI extends JPanel {
 		
 		//NÚT THÊM
 		JButton ButtonThem = new JButton("Thêm nhà cung cấp");
+		ButtonThem.setIcon(new ImageIcon("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\icon\\plus.png"));
 		ButtonThem.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panelQLNCC.add(ButtonThem);
 		ButtonThem.addActionListener(new ActionListener() {
@@ -149,6 +144,7 @@ public class NhaCungCapGUI extends JPanel {
 		
 		//NÚT XÓA
 		JButton ButtonXoa = new JButton("Xóa nhà cung cấp");
+		ButtonXoa.setIcon(new ImageIcon("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\icon\\bin.png"));
 		ButtonXoa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panelQLNCC.add(ButtonXoa);
 		ButtonXoa.addActionListener(new ActionListener() {
@@ -160,6 +156,7 @@ public class NhaCungCapGUI extends JPanel {
 		
 		//NÚT SỬA
 		JButton ButtonSua = new JButton("Sửa nhà cung cấp");
+		ButtonSua.setIcon(new ImageIcon("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\icon\\edit.png"));
 		ButtonSua.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panelQLNCC.add(ButtonSua);
 		ButtonSua.addActionListener(new ActionListener() {
@@ -171,8 +168,8 @@ public class NhaCungCapGUI extends JPanel {
 		
 				//KHUNG HIỂN THỊ TÊN CỦA CÁC NHÀ CC ĐANG HỢP TÁC
 		JPanel panelCacnhacungcap = new JPanel();
-		panelCacnhacungcap.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "C\u00E1c nh\u00E0 cung c\u1EA5p hi\u1EC7n t\u1EA1i", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelCacnhacungcap.setBounds(507, 50, 363, 247);
+		panelCacnhacungcap.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch nh\u00E0 cung c\u1EA5p ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelCacnhacungcap.setBounds(507, 50, 752, 247);
 		add(panelCacnhacungcap);
 		panelCacnhacungcap.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -182,13 +179,21 @@ public class NhaCungCapGUI extends JPanel {
 		panelCacnhacungcap.add(scrollPaneCacnhacc);
 		
 		//TABLE HIỆN SẢN PHẨM VÀ SỰ KIỆN CỦA NÓ
-		DSNhaCC=new JTable();
+		DSNhaCC=new JTable() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		DSNhaCC.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		DSNhaCC.getTableHeader().setReorderingAllowed(false);
 		DSNhaCC.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent evt){
             	chonnhacc(evt);
             }
         });
+		DSNhaCC.setRowHeight(30);
 		modelDSNhaCC=new DefaultTableModel();
 		DSNhaCC.setModel(modelDSNhaCC);
 		modelDSNhaCC.addColumn("Mã nhà cung cấp");
@@ -227,11 +232,12 @@ public class NhaCungCapGUI extends JPanel {
 		paneltìmkiem.add(textFieldtimkiem2);
 		
 		//NÚT XÁC NHẬN TÌM KIẾM
-		JButton ButtonXacnhan = new JButton("Xác nhận");
-		ButtonXacnhan.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonXacnhan.setBounds(296, 26, 157, 48);
-		paneltìmkiem.add(ButtonXacnhan);
-		ButtonXacnhan.addActionListener(new ActionListener() {
+		JButton ButtonTimkiem = new JButton("Tìm");
+		ButtonTimkiem.setIcon(new ImageIcon("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\icon\\search.png"));
+		ButtonTimkiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ButtonTimkiem.setBounds(296, 26, 157, 48);
+		paneltìmkiem.add(ButtonTimkiem);
+		ButtonTimkiem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				xacnhantimkiemnhacc(evt);
@@ -241,7 +247,7 @@ public class NhaCungCapGUI extends JPanel {
 				//KHUNG ĐỂ HIỂN THỊ BẢNG SẢN PHẨM CỦA 1 NHÀ CC NẾU BẤM VÀO
 		JPanel panelSanphamthuoc = new JPanel();
 		panelSanphamthuoc.setBorder(new TitledBorder(null, "S\u1EA3n ph\u1EA9m c\u1EE7a nh\u00E0 cung c\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelSanphamthuoc.setBounds(507, 307, 363, 268);
+		panelSanphamthuoc.setBounds(507, 307, 752, 361);
 		add(panelSanphamthuoc);
 		panelSanphamthuoc.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -251,7 +257,15 @@ public class NhaCungCapGUI extends JPanel {
 		panelSanphamthuoc.add(scrollPaneSP);
 		
 		//TABLE SẢN PHẨM VÀ SỰ KIỆN CỦA NÓ
-		DSSanPham=new JTable();
+		DSSanPham=new JTable(){
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		DSSanPham.getTableHeader().setReorderingAllowed(false);
+		DSSanPham.setRowHeight(30);
+		DSSanPham.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		modelDSSanPham=new DefaultTableModel();
 		modelDSSanPham.addColumn("Mã nhà CC");
 		modelDSSanPham.addColumn("Mã sản phẩm");
@@ -261,8 +275,9 @@ public class NhaCungCapGUI extends JPanel {
 		
 		//TẠO NÚT RESET MỌI THỨ
 		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setIcon(new ImageIcon("D:\\Study Folder\\SGU\\2022-2023 HK2\\Java\\Project\\image\\icon\\refresh.png"));
 		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnRefresh.setBounds(70, 27, 85, 21);
+		btnRefresh.setBounds(10, 586, 110, 45);
 		add(btnRefresh);
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
@@ -350,12 +365,10 @@ public class NhaCungCapGUI extends JPanel {
 	//HÀM CHỈNH TRẠNG THÁI CHO Ô JTEXTFIELD
 	public void chinhtrangthainhap(int i) {
 		if(i==1) {
-			textFieldMaNCC.setEditable(true);
 			textFieldTenNCC.setEditable(true);
 			textFieldDCNCC.setEditable(true);
 			textFieldSDTNCC.setEditable(true);
 		} else {
-			textFieldMaNCC.setEditable(false);
 			textFieldTenNCC.setEditable(false);
 			textFieldDCNCC.setEditable(false);
 			textFieldSDTNCC.setEditable(false);
@@ -369,7 +382,7 @@ public class NhaCungCapGUI extends JPanel {
 		temp.setTenNhaCC(textFieldTenNCC.getText());
 		temp.setDiaChi(textFieldDCNCC.getText());
 		temp.setSoDienThoai(textFieldSDTNCC.getText());
-		if(	textFieldMaNCC.getText().trim().equals("") || //HÀM TRIM() XÓA HẾT KHOẢNG TRẮNG
+		if(	 //HÀM TRIM() XÓA HẾT KHOẢNG TRẮNG
 			textFieldTenNCC.getText().trim().equals("") ||
 			textFieldDCNCC.getText().trim().equals("") ||
 			textFieldSDTNCC.getText().trim().equals("")) {
@@ -377,13 +390,13 @@ public class NhaCungCapGUI extends JPanel {
 		}
 		else {
 			if(modexacnhan=="them") {
-				if(NhaCungCapDAL.themnhacungcap(temp))
+				if(NhaCungCapBLL.themnhacungcap(temp))
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
 				else
 					JOptionPane.showMessageDialog(this, "Thêm thất bại");
 			}
 			if(modexacnhan=="sua") {
-				if(NhaCungCapDAL.suanhacungcap(temp))
+				if(NhaCungCapBLL.suanhacungcap(temp))
 					JOptionPane.showMessageDialog(this, "Sửa thành công");
 				else
 					JOptionPane.showMessageDialog(this, "Sửa thành công");
@@ -398,13 +411,14 @@ public class NhaCungCapGUI extends JPanel {
 		int vitri = DSNhaCC.getSelectedRow();
 		if(vitri>=0) {
 			int i = NhaCungCapDAL.xoanhacungcap(modelDSNhaCC.getValueAt(vitri, 0).toString());
-			if(i==1) 
+			int c = JOptionPane.showConfirmDialog(null, "Xác nhận xóa nhà cung cấp ?","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			if(i==1 && c == 0) 
 				JOptionPane.showMessageDialog(this, "Xóa thành công");
 			else
 				JOptionPane.showMessageDialog(this, "Xóa thất bại");
 			resetNCC();
 		} else {
-			JOptionPane.showMessageDialog(this, "lỗi lấy dữ liệu/chưa chọn mục tiêu");
+			JOptionPane.showMessageDialog(this, "Lỗi lấy dữ liệu/chưa chọn mục tiêu");
 		}
 	}
 	
@@ -412,16 +426,22 @@ public class NhaCungCapGUI extends JPanel {
 	private void themnhacc(ActionEvent evt) {
 		chinhtrangthainhap(1);	//chuyển sang chế độ nhập
 		ButtonXacnhan1.setEnabled(true);	//mở để xác nhận
+		textFieldMaNCC.setText(BLL.NhaCungCapBLL.taoMaNhaCC());
 		modexacnhan="them";
 		textFieldMaNCC.setToolTipText("Mã nhà cung cấp là duy nhất");
+		textFieldTenNCC.setText("");
+		textFieldDCNCC.setText("");
+		textFieldSDTNCC.setText("");
+		LabelSL.setText("");
+		DSNhaCC.setEnabled(false);
 	}
 	
 	//HÀM SỬA NHÀ CC
 	private void suanhacc(ActionEvent evt) {
 		chinhtrangthainhap(1);
 		ButtonXacnhan1.setEnabled(true);
-		textFieldMaNCC.setEnabled(false);
 		modexacnhan="sua";
+		DSNhaCC.setEnabled(true);
 	}
 	
 	//HÀM XÁC NHẬN TÌM KIẾM NHÀ CC
@@ -467,6 +487,6 @@ public class NhaCungCapGUI extends JPanel {
 		//chỉnh trạng thái jtextfield
 		chinhtrangthainhap(0);
 		//chỉnh trạng thái nút tạo 
-		ButtonXacnhan1.setEnabled(false);	
+		ButtonXacnhan1.setEnabled(true);	
 	}
 }

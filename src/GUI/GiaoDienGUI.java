@@ -1,205 +1,250 @@
 package GUI;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 
 import DTO.TaiKhoan;
+import javafx.scene.shape.Box;
 
-import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
+import javax.swing.*;
 import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
+import java.awt.Window.Type;
+import java.awt.Component;
 
 public class GiaoDienGUI extends JFrame {
 
 	private JPanel contentPane;
-
+	JPanel panelGiaoDien = new JPanel();
+	JMenu mnKhoHang = new JMenu("Kho hàng");
+	JMenuItem mntmSanPham = new JMenuItem("Sản phẩm");
+	JMenuItem mntmNhapHang = new JMenuItem("Nhập hàng");
+	JMenu mnBanHang = new JMenu("Bán hàng");
+	JMenu mnDoiTac = new JMenu("Đối tác");
+	JMenuItem mntmNhaCC = new JMenuItem("Nhà cung cấp");
+	JMenuItem mntmKhachHang = new JMenuItem("Khách hàng");
+	JMenu mnNhanSu = new JMenu("Nhân sự");
+	JMenu mnTaiKhoan = new JMenu("Tài khoản");
+	JMenu mnThongKe = new JMenu("Thống kê");
 	/**
 	 * Create the frame.
 	 */
 	public GiaoDienGUI(TaiKhoan taiKhoan) {
+		setType(Type.POPUP);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("image/extra_img/pencil_icon.png"));
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+//		panelGiaoDien.setSize(new Dimension(1082,689));
+		panelGiaoDien.setBounds(0, 0, 1269,679);
+		contentPane.add(panelGiaoDien);
+		panelGiaoDien.setLayout(null);
+		
+		panelGiaoDien.setLayout(null);
+//		panelGiaoDien.add(new JPanel());
+//		panelGiaoDien.add(new SanPhamGUI(), "SanPham");
+//		panelGiaoDien.add(new NhanVienGUI(), "NhanVien");
+//		panelGiaoDien.add(new KhachHangGUI(), "KhachHang");
+//		panelGiaoDien.add(new NhaCungCapGUI(), "NhaCungCap");
+//		panelGiaoDien.add(new HoaDonGUI(), "HoaDon");
+//		panelGiaoDien.add(new PhieuNhapGUI(), "PhieuNhap");
+//		panelGiaoDien.add(new PhieuXuatGUI(), "PhieuXuat");
+//		panelGiaoDien.add(new TaiKhoanGUI(), "TaiKhoan");
+//		panelGiaoDien.add(new ThongKeGUI(), "ThongKe");
 		setResizable(false);
 		setTitle("Giao diện quản lý");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1276, 740);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(240, 240, 240));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setForeground(new Color(0, 0, 0));
+		menuBar.setBackground(new Color(240, 240, 240));
+		menuBar.setFont(new Font("Sylfaen", Font.PLAIN, 14));
+		setJMenuBar(menuBar);
+		
+		mnKhoHang.setIcon(new ImageIcon("image/icon/box.png"));
+		mnKhoHang.setForeground(new Color(0, 51, 255));
+		mnKhoHang.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mnKhoHang.setHorizontalAlignment(SwingConstants.LEFT);
+		menuBar.add(mnKhoHang);
+		
+		mntmSanPham.setForeground(new Color(0, 51, 255));
+		mntmSanPham.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mntmSanPham.setHorizontalAlignment(SwingConstants.LEFT);
+		mntmSanPham.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				cl.show(panelGiaoDien, "SanPham");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new SanPhamGUI());
+			}
+		});
+		mnKhoHang.add(mntmSanPham);
+		
+		mntmNhapHang.setForeground(new Color(0, 51, 255));
+		mntmNhapHang.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mntmNhapHang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				cl.show(panelGiaoDien, "PhieuNhap");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new PhieuNhapGUI(taiKhoan));
+			}
+		});
+		mnKhoHang.add(mntmNhapHang);
+		
+		mnBanHang.setIcon(new ImageIcon("image/icon/cross.png"));
+		mnBanHang.setForeground(new Color(0, 51, 255));
+		mnBanHang.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mnBanHang.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+//				cl.show(panelGiaoDien,"HoaDon");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new HoaDonGUI(taiKhoan));
+			}
+		});
+		menuBar.add(mnBanHang);
+		
+		mnDoiTac.setIcon(new ImageIcon("image/icon/management.png"));
+		mnDoiTac.setForeground(new Color(0, 51, 255));
+		mnDoiTac.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		menuBar.add(mnDoiTac);
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JPanel panelDanhMuc = new JPanel();
-		panelDanhMuc.setBorder(null);
-		panelDanhMuc.setBounds(0, 83, 186, 618);
-		contentPane.add(panelDanhMuc);
-		
-		JPanel panelGiaoDien = new JPanel();
-		panelGiaoDien.setSize(new Dimension(1082,689));
-		panelGiaoDien.setBounds(187, 10, 1082,689);
-		contentPane.add(panelGiaoDien);
-		panelGiaoDien.setLayout(null);
-		
-		CardLayout cl = new CardLayout();
-		panelGiaoDien.setLayout(cl);
-		panelGiaoDien.add(new JPanel());
-		panelGiaoDien.add(new SanPhamGUI(), "SanPham");
-		panelGiaoDien.add(new NhanVienGUI(), "NhanVien");
-		panelGiaoDien.add(new KhachHangGUI(), "KhacHang");
-		panelGiaoDien.add(new NhaCungCapGUI(), "NhaCungCap");
-		panelGiaoDien.add(new HoaDonGUI(), "HoaDon");
-		panelGiaoDien.add(new PhieuNhapGUI(), "PhieuNhap");
-		panelGiaoDien.add(new PhieuXuatGUI(), "PhieuXuat");
-		panelGiaoDien.add(new TaiKhoanGUI(), "TaiKhoan");
-		panelGiaoDien.add(new ThongKeGUI(), "ThongKe");
-		
-		JButton btnSanPham = new JButton("SẢN PHẨM");
-		btnSanPham.setBorder(null);
-		btnSanPham.setBackground(new Color(0, 153, 255));
-		btnSanPham.setForeground(new Color(255, 255, 255));
-		btnSanPham.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSanPham.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnSanPham.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent event) {
-				cl.show(panelGiaoDien, "SanPham");
-			}
-		});
-		btnSanPham.setFont(new Font("Tahoma", Font.BOLD, 14));
-		
-		JButton btnNhanVien = new JButton("NHÂN VIÊN");
-		btnNhanVien.setBorder(null);
-		btnNhanVien.setBackground(new Color(0, 153, 255));
-		btnNhanVien.setForeground(new Color(255, 255, 255));
-		btnNhanVien.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNhanVien.addActionListener(new ActionListener() {
+		mntmNhaCC.setForeground(new Color(0, 51, 255));
+		mntmNhaCC.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mntmNhaCC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "NhanVien");
+//				cl.show(panelGiaoDien,"NhaCungCap");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new NhaCungCapGUI());
 			}
 		});
-		btnNhanVien.setFont(new Font("Tahoma", Font.BOLD, 14));
+		mnDoiTac.add(mntmNhaCC);
 		
-		JButton btnKhachHang = new JButton("KHÁCH HÀNG");
-		btnKhachHang.setBorder(null);
-		btnKhachHang.setBackground(new Color(0, 153, 255));
-		btnKhachHang.setForeground(new Color(255, 255, 255));
-		btnKhachHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnKhachHang.addActionListener(new ActionListener() {
+		mntmKhachHang.setForeground(new Color(0, 51, 255));
+		mntmKhachHang.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mntmKhachHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "KhachHang");
+//				cl.show(panelGiaoDien,"KhachHang");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new KhachHangGUI());
 			}
 		});
-		btnKhachHang.setFont(new Font("Tahoma", Font.BOLD, 14));
+		mnDoiTac.add(mntmKhachHang);
 		
-		JButton btnNhaCC = new JButton("NHÀ CUNG CẤP");
-		btnNhaCC.setBorder(null);
-		btnNhaCC.setBackground(new Color(0, 153, 255));
-		btnNhaCC.setForeground(new Color(255, 255, 255));
-		btnNhaCC.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNhaCC.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "NhaCungCap");
+		mnNhanSu.setIcon(new ImageIcon("image/icon/employees.png"));
+		mnNhanSu.setForeground(new Color(0, 51, 255));
+		mnNhanSu.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mnNhanSu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+//				cl.show(panelGiaoDien,"NhanVien");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new NhanVienGUI());
 			}
 		});
-		btnNhaCC.setFont(new Font("Tahoma", Font.BOLD, 14));
+		menuBar.add(mnNhanSu);
 		
-		JButton btnHoaDon = new JButton("HÓA ĐƠN");
-		btnHoaDon.setBorder(null);
-		btnHoaDon.setBackground(new Color(0, 153, 255));
-		btnHoaDon.setForeground(new Color(255, 255, 255));
-		btnHoaDon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnHoaDon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "HoaDon");
+		mnTaiKhoan.setIcon(new ImageIcon("image/icon/user.png"));
+		mnTaiKhoan.setForeground(new Color(0, 51, 255));
+		mnTaiKhoan.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mnTaiKhoan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+//				cl.show(panelGiaoDien,"TaiKhoan");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new TaiKhoanGUI());
 			}
 		});
-		btnHoaDon.setFont(new Font("Tahoma", Font.BOLD, 14));
+		menuBar.add(mnTaiKhoan);
 		
-		JButton btnNhapHang = new JButton("NHẬP HÀNG");
-		btnNhapHang.setBorder(null);
-		btnNhapHang.setBackground(new Color(0, 153, 255));
-		btnNhapHang.setForeground(new Color(255, 255, 255));
-		btnNhapHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNhapHang.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "PhieuNhap");
+		mnThongKe.setIcon(new ImageIcon("image/icon/dashboard.png"));
+		mnThongKe.setForeground(new Color(0, 51, 255));
+		mnThongKe.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		mnThongKe.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+//				cl.show(panelGiaoDien,"ThongKe");
+				panelGiaoDien.removeAll();
+				panelGiaoDien.revalidate();
+				panelGiaoDien.repaint();
+				panelGiaoDien.add(new ThongKeGUI());
 			}
 		});
-		btnNhapHang.setFont(new Font("Tahoma", Font.BOLD, 14));
+		menuBar.add(mnThongKe);
 		
-		JButton btnXuatHang = new JButton("XUẤT HÀNG");
-		btnXuatHang.setBorder(null);
-		btnXuatHang.setBackground(new Color(0, 153, 255));
-		btnXuatHang.setForeground(new Color(255, 255, 255));
-		btnXuatHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXuatHang.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "PhieuXuat");
+//		Component horizontalGlue = Box.createHorizontalGlue();
+//		menuBar.add(horizontalGlue);
+		
+//		menuBar.add(JMenuBar.);
+		
+		JMenu mnDangXuat = new JMenu("Đăng xuất");
+		mnDangXuat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dangXuat();
 			}
 		});
-		btnXuatHang.setFont(new Font("Tahoma", Font.BOLD, 14));
+		mnDangXuat.setIcon(new ImageIcon("image/icon/switch.png"));
+		mnDangXuat.setHorizontalAlignment(SwingConstants.LEFT);
+		mnDangXuat.setForeground(new Color(0, 51, 255));
+		mnDangXuat.setFont(new Font("Sitka Text", Font.PLAIN, 16));
+		menuBar.add(mnDangXuat);
 		
-		JButton btnTaiKhoan = new JButton("TÀI KHOẢN");
-		btnTaiKhoan.setBorder(null);
-		btnTaiKhoan.setBackground(new Color(0, 153, 255));
-		btnTaiKhoan.setForeground(new Color(255, 255, 255));
-		btnTaiKhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaiKhoan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "TaiKhoan");
-			}
-		});
-		btnTaiKhoan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		
-		JButton btnThongKe = new JButton("THỐNG KÊ");
-		btnThongKe.setBorder(null);
-		btnThongKe.setBackground(new Color(0, 153, 255));
-		btnThongKe.setForeground(new Color(255, 255, 255));
-		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnThongKe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(panelGiaoDien, "ThongKe");
-			}
-		});
-		btnThongKe.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelDanhMuc.setLayout(new GridLayout(0, 1, 0, 0));
-		
-//		if("BANHANG".equals(taiKhoan.getChucVu().getMaChucVu())) {
-//			panelDanhMuc.add(btnKhachHang);
-//			panelDanhMuc.add(btnHoaDon);
-//		} else if("THUKHO".equals(taiKhoan.getChucVu().getMaChucVu())) {
-//			panelDanhMuc.add(btnSanPham);
-//			panelDanhMuc.add(btnNhapHang);
-//			panelDanhMuc.add(btnXuatHang);
-//		} else if("QUANLY".equals(taiKhoan.getChucVu().getMaChucVu())) {
-//			panelDanhMuc.add(btnSanPham);
-//			panelDanhMuc.add(btnNhanVien);
-//			panelDanhMuc.add(btnKhachHang);
-//			panelDanhMuc.add(btnNhaCC);
-//			panelDanhMuc.add(btnHoaDon);
-//			panelDanhMuc.add(btnNhapHang);
-//			panelDanhMuc.add(btnXuatHang);
-//			panelDanhMuc.add(btnTaiKhoan);
-//			panelDanhMuc.add(btnThongKe);
-//		}
-		
-		panelDanhMuc.add(btnSanPham);
-		panelDanhMuc.add(btnNhanVien);
-		panelDanhMuc.add(btnKhachHang);
-		panelDanhMuc.add(btnNhaCC);
-		panelDanhMuc.add(btnHoaDon);
-		panelDanhMuc.add(btnNhapHang);
-		panelDanhMuc.add(btnXuatHang);
-		panelDanhMuc.add(btnTaiKhoan);
-		panelDanhMuc.add(btnThongKe);
+		quyenTaiKhoan(taiKhoan);
+	}
+	
+	private void quyenTaiKhoan(TaiKhoan tk) {
+		switch(tk.getChucVu().getMaChucVu()) {
+			case "QUANLY":
+				break;
+			case "THUKHO":
+				mntmKhachHang.setVisible(false);
+				mnBanHang.setVisible(false);
+				mnThongKe.setVisible(false);
+				mnTaiKhoan.setVisible(false);
+				mnNhanSu.setVisible(false);
+				break;
+			case "BANHANG":
+				mnThongKe.setVisible(false);
+				mnTaiKhoan.setVisible(false);
+				mntmNhaCC.setVisible(false);
+				mnKhoHang.setVisible(false);
+				mnNhanSu.setVisible(false);
+				break;
+		}
+	}
+	
+	private void dangXuat() {
+		int c = JOptionPane.showConfirmDialog(null, "Xác nhận đăng xuất tài khoản ?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+		if(c==0) {
+			
+			this.dispose();
+			new DangNhapGUI().setVisible(true);
+		}
 	}
 }

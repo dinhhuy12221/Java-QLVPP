@@ -7,7 +7,7 @@ public class ThongKeDAL extends DatabaseAccess{
 		ArrayList<ArrayList<String>> danhSachDoanhThu = new ArrayList<ArrayList<String>>();
 		try {
 			getConnection();
-			String s = "SELECT NGAY_LAP, SUM(TONG_TIEN) FROM HOA_DON WHERE TINH_TRANG='True' GROUP BY NGAY_LAP ORDER BY NGAY_LAP ASC";
+			String s = "SELECT TOP 7 FORMAT([NGAY_LAP], 'yyyy-MM-dd'), SUM(TONG_TIEN) FROM HOA_DON GROUP BY FORMAT([NGAY_LAP], 'yyyy-MM-dd') ORDER BY FORMAT([NGAY_LAP], 'yyyy-MM-dd') DESC";
 			statement = conn.createStatement();
 			resultSet = statement.executeQuery(s);
 			while(resultSet.next()) {
@@ -28,7 +28,7 @@ public class ThongKeDAL extends DatabaseAccess{
 		ArrayList<ArrayList<String>> danhSachChiTieu = new ArrayList<ArrayList<String>>();
 		try {
 			getConnection();
-			String s = "SELECT NGAY_LAP, SUM(TONG_TIEN) FROM PHIEU_NHAP GROUP BY NGAY_LAP ORDER BY NGAY_LAP ASC";
+			String s = "SELECT TOP 7 FORMAT([NGAY_LAP], 'yyyy-MM-dd'), SUM(TONG_TIEN) FROM PHIEU_NHAP GROUP BY FORMAT([NGAY_LAP], 'yyyy-MM-dd') ORDER BY FORMAT([NGAY_LAP], 'yyyy-MM-dd') DESC";
 			statement = conn.createStatement();
 			resultSet = statement.executeQuery(s);
 			while(resultSet.next()) {
